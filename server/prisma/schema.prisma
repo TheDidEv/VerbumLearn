@@ -1,0 +1,87 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Users {
+  Id       String   @id @default(uuid())
+  UserName String
+  Email    String   @unique
+  Password String
+  CreateAt DateTime @default(now())
+  UpdateAt DateTime @default(now())
+
+  SentFriendRequests     Friends[] @relation("SentFriendRequests")
+  ReceivedFriendRequests Friends[] @relation("ReceivedFriendRequests")
+
+  RejectedRequests RejectFriendRequests[]
+
+  Token TokenModels?
+
+  Words Words[]
+}
+
+model TokenModels {
+  Id           String @id @default(uuid())
+  RefreshToken String
+
+  User   Users  @relation(fields: [UserId], references: [Id])
+  UserId String @unique
+}
+
+model Friends {
+  Id        String        @id @default(uuid())
+  Status    statusFriends @default(PENDING)
+  createdAt DateTime      @default(now())
+
+  FromUser   Users  @relation("SentFriendRequests", fields: [FromUserId], references: [Id])
+  FromUserId String
+
+  ToUser   Users  @relation("ReceivedFriendRequests", fields: [ToUserId], references: [Id])
+  ToUserId String
+
+  RejectFriendRequests RejectFriendRequests[]
+
+  @@unique([FromUserId, ToUserId])
+}
+
+model RejectFriendRequests {
+  Id        String   @id @default(uuid())
+  CreatedAt DateTime @default(now())
+
+  User   Users  @relation(fields: [UserId], references: [Id])
+  UserId String
+
+  Request   Friends @relation(fields: [RequestId], references: [Id])
+  RequestId String
+
+  @@unique([UserId, RequestId])
+}
+
+model Words {
+  Id              String     @id @default(uuid())
+  Word            String
+  WordTranslation String
+  Status          statusWord @default(WRONG)
+  CreateAt        DateTime   @default(now())
+  UpdateAt        DateTime   @default(now())
+
+  Users   Users  @relation(fields: [UsersId], references: [Id])
+  UsersId String
+}
+
+enum statusFriends {
+  PENDING
+  ACCEPTED
+  REJECT
+}
+
+enum statusWord {
+  WRONG
+  MID
+  LERNED
+}
