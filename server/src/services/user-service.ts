@@ -2,9 +2,10 @@ import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt";
 import { v4 } from 'uuid'
 import UserDto from "../dtos/user-dto";
-
+import TokenService from './token-sevice';
 
 const prisma = new PrismaClient();
+const tokenService = new TokenService();
 
 type userType = {
     UserName: string,
@@ -15,10 +16,9 @@ type userType = {
 class UserService {
     async registration(userData: userType) {
         const user = prisma.users.findFirst({
-            where: {
-                Email: userData.Email
-            }
+            where: { Email: userData.Email }
         });
+
         if (user !== null && user !== undefined) {
             throw new Error("User with such an email already exists");
         } else {
@@ -35,17 +35,46 @@ class UserService {
             });
 
             //const mailService.sendActivationLink(newUser.Email, `${process.env.API_URL}/activate/${activateLink}`);
+
             const userDto = new UserDto(newUser);
-             
+            const tokens = tokenService.generateToken({ ...userDto });
+            tokenService.saveToken(userDto.Id, (await tokens).refreshToken);
+            return {
+                ...tokens,
+                user: userDto
+            }
         }
     }
 
-    async activate() {
-
+    async activate(activateLink: string) {
+        const user = await prisma.users.findFirst({
+            where: { ActivationLink: activateLink }
+        });
+        if (!user) {
+            throw new Error("Incorect link");
+        }
+        await prisma.users.update({
+            where: { Id: user.Id },
+            data: { ActivationLink: activateLink }
+        });
     }
 
-    async login() {
+    async login(email: string, password: string) {
+        const user = await prisma.users.findFirst({ where: { Email: email } });
+        if (!user) {
+            throw new Error("User not found");
+        } else {
+            const isEqual = bcrypt.compare(password, user.Password);
 
+            const userDto = new UserDto(user);
+            const tokens = tokenService.generateToken(userDto);
+
+            tokenService.saveToken(userDto.Id, (await tokens).refreshToken)
+            return {
+                ...tokens,
+                user: userDto
+            }
+        }
     }
 
     async logout() {

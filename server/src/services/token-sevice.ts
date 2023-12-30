@@ -5,7 +5,7 @@ import UserDto from "../dtos/user-dto";
 
 const prisma = new PrismaClient();
 
-class TokenService {
+export default class TokenService {
     async generateToken(payload: UserDto) {
         const accessToken = jwt.sign(payload, process.env.JWT_ACCESS_SYCRET!, {
             expiresIn: '15m'
@@ -73,5 +73,3 @@ class TokenService {
         return tokenData;
     }
 }
-
-module.exports = new TokenService();
