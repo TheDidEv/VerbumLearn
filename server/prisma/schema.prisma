@@ -8,12 +8,14 @@ datasource db {
 }
 
 model Users {
-  Id       String   @id @default(uuid())
-  UserName String
-  Email    String   @unique
-  Password String
-  CreateAt DateTime @default(now())
-  UpdateAt DateTime @default(now())
+  Id             String   @id @default(uuid())
+  UserName       String
+  Email          String   @unique
+  Password       String
+  Activated      Boolean  @default(false)
+  ActivationLink String
+  CreateAt       DateTime @default(now())
+  UpdateAt       DateTime @default(now())
 
   SentFriendRequests     Friends[] @relation("SentFriendRequests")
   ReceivedFriendRequests Friends[] @relation("ReceivedFriendRequests")
