@@ -13,7 +13,7 @@ type userType = {
     Password: string
 }
 
-class UserService {
+export default class UserService {
     async registration(userData: userType) {
         const user = prisma.users.findFirst({
             where: { Email: userData.Email }
@@ -66,6 +66,10 @@ class UserService {
         } else {
             const isEqual = bcrypt.compare(password, user.Password);
 
+            if (!isEqual) {
+                throw new Error("Wrong password");
+            }
+
             const userDto = new UserDto(user);
             const tokens = tokenService.generateToken(userDto);
 
@@ -77,11 +81,30 @@ class UserService {
         }
     }
 
-    async logout() {
-
+    async logout(refreshToken: string) {
+        const tokenData = await prisma.tokenModels.findFirst({
+            where: {
+                RefreshToken: refreshToken
+            }
+        });
+        if (tokenData) {
+            const token = await prisma.tokenModels.delete({ where: { Id: tokenData.Id } });
+            return token;
+        } else {
+            throw new Error('Not foud token');
+        }
     }
 
-    async refresh() {
+    async refresh(refreshToken: string) {
+        if (!refreshToken) {
+            throw new Error("Unathorized");
+        }
+        const userData = tokenService.validateRefreshToken(refreshToken);
+        const tokenFromDB = await tokenService.findToken(refreshToken);
+
+        if (!userData || !tokenFromDB) {
+            throw new Error("Unathorized");
+        }
 
     }
 }
