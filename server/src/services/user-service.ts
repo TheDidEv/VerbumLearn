@@ -1,21 +1,24 @@
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt";
-import { v4 } from 'uuid'
+import { v4 as uuidv4 } from 'uuid';
 import UserDto from "../dtos/user-dto";
 import TokenService from './token-sevice';
 
 const prisma = new PrismaClient();
 const tokenService = new TokenService();
 
-type userType = {
-    UserName: string,
-    Email: string,
+type UserType = {
+    Id: string;
+    UserName: string;
     Password: string
+    Email: string;
+    Activated: boolean;
+    ActivationLink: string;
 }
 
 export default class UserService {
-    async registration(userData: userType) {
-        const user = prisma.users.findFirst({
+    static async registration(userData: UserType) {
+        const user = await prisma.users.findFirst({
             where: { Email: userData.Email }
         });
 
@@ -23,7 +26,7 @@ export default class UserService {
             throw new Error("User with such an email already exists");
         } else {
             const hashPasword = await bcrypt.hash(userData.Password, 6);
-            const activateLink = v4();//genearte link for activation account
+            const activateLink = uuidv4();//genearte link for activation account
 
             const newUser = await prisma.users.create({
                 data: {
@@ -46,7 +49,7 @@ export default class UserService {
         }
     }
 
-    async activate(activateLink: string) {
+    static async activate(activateLink: string) {
         const user = await prisma.users.findFirst({
             where: { ActivationLink: activateLink }
         });
@@ -59,7 +62,7 @@ export default class UserService {
         });
     }
 
-    async login(email: string, password: string) {
+    static async login(email: string, password: string) {
         const user = await prisma.users.findFirst({ where: { Email: email } });
         if (!user) {
             throw new Error("User not found");
@@ -81,7 +84,7 @@ export default class UserService {
         }
     }
 
-    async logout(refreshToken: string) {
+    static async logout(refreshToken: string) {
         const tokenData = await prisma.tokenModels.findFirst({
             where: {
                 RefreshToken: refreshToken
@@ -95,16 +98,30 @@ export default class UserService {
         }
     }
 
-    async refresh(refreshToken: string) {
+    static async refresh(refreshToken: string) {
         if (!refreshToken) {
             throw new Error("Unathorized");
         }
-        const userData = tokenService.validateRefreshToken(refreshToken);
+        const validateToken = await tokenService.validateRefreshToken(refreshToken);
+        const userIdFromTokenModel = await prisma.tokenModels.findFirst({
+            where: { RefreshToken: refreshToken }
+        });
         const tokenFromDB = await tokenService.findToken(refreshToken);
 
-        if (!userData || !tokenFromDB) {
-            throw new Error("Unathorized");
+        if (!validateToken || !tokenFromDB) {
+            throw new Error("Some erron with tokens");
         }
 
+        const user = await prisma.users.findFirst({
+            where: { Id: userIdFromTokenModel?.UserId }
+        });
+
+        const userDto = new UserDto(user!);
+        const tokens = tokenService.generateToken(userDto);
+
+        return {
+            ...tokens,
+            user: userDto
+        }
     }
 }

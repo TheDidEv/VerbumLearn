@@ -5,9 +5,9 @@ export const userRouter = Router();
 
 userRouter.post('/registration', UserController.registration);
 
-userRouter.post('/registration', UserController.login);
+userRouter.post('/login', UserController.login);
 
-userRouter.post('/registration', UserController.logout);
+userRouter.post('/logout', UserController.logout);
 
 userRouter.get('/activateLink/:link', UserController.activateLink);
 
