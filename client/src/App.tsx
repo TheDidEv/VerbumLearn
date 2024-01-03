@@ -1,25 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
+import { Header } from './components/header/header';
+import { Rules } from './components/english-rules/rules';
+import { NotFound } from './components/page-not-found/not-found';
+import { Main } from './components/main/main';
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <div className="App h-lvh bg-indigo-950"> {/*bg-gradient-to-r from-indigo-700 to-indigo-950 */}
+      <BrowserRouter>
+      <Header />
+        <Routes>
+            <Route index element={<Main />} />
+            <Route path='/Rules' element={<Rules />} />
+            <Route path='*' element={<NotFound />} />
+        </Routes>
+      </BrowserRouter>
+    </div >
   );
 }
 

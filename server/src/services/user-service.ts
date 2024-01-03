@@ -3,18 +3,10 @@ import bcrypt from "bcrypt";
 import { v4 as uuidv4 } from 'uuid';
 import UserDto from "../dtos/user-dto";
 import TokenService from './token-sevice';
+import { UserType } from "../types";
 
 const prisma = new PrismaClient();
 const tokenService = new TokenService();
-
-type UserType = {
-    Id: string;
-    UserName: string;
-    Password: string
-    Email: string;
-    Activated: boolean;
-    ActivationLink: string;
-}
 
 export default class UserService {
     static async registration(userData: UserType) {

@@ -1,14 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import UserService from "../services/user-service";
-
-type UserType = {
-    Id: string;
-    UserName: string;
-    Password: string
-    Email: string;
-    Activated: boolean;
-    ActivationLink: string;
-}
+import { UserType } from "../types";
 
 export class UserController {
     static async registration(req: Request, res: Response, next: NextFunction) {
