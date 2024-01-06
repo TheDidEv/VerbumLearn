@@ -5,21 +5,34 @@ import { UserType } from "../types";
 export class UserController {
     static async registration(req: Request, res: Response, next: NextFunction) {
         try {
-            const user: UserType = req.body;
-            const userData = await UserService.registration(user);
+            const userData: UserType = req.body;
+
+            const user = await UserService.registration(userData);
 
             res.cookie(
                 'refreshToken',
-                userData.refreshToken,
+                user.refreshToken,
                 { maxAge: 15 * 24 * 60 * 60 * 1000, httpOnly: true }
-            )
+            );
+            return res.json(user);
         } catch (error) {
             next(error);
         }
     }
 
-    static async login(req: Request, res: Response) {
-
+    static async login(req: Request, res: Response, next: NextFunction) {
+        try {
+            const userData = req.body;
+            const user = await UserService.login(userData.Email, userData.Password);
+            res.cookie(
+                'refreshToken',
+                user.refreshToken,
+                { maxAge: 15 * 24 * 60 * 60 * 1000, httpOnly: true }
+            );
+            return res.json(user);
+        } catch (erron) {
+            next(erron)
+        }
     }
 
     static async logout(req: Request, res: Response) {
