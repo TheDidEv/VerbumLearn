@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
 import { userRouter } from './routers/user-router';
 
 require("dotenv").config({ path: __dirname + './../.env' });
@@ -9,6 +10,7 @@ const main = async () => {
     const app = express();
 
     app.use(cors());
+    app.use(cookieParser())
     app.use(express.json())
 
     app.use('/user', userRouter);

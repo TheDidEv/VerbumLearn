@@ -56,6 +56,7 @@ export default class UserService {
 
     static async login(email: string, password: string) {
         const user = await prisma.users.findFirst({ where: { Email: email } });
+
         if (!user) {
             throw new Error("User not found");
         } else {
@@ -66,9 +67,9 @@ export default class UserService {
             }
 
             const userDto = new UserDto(user);
-            const tokens = tokenService.generateToken(userDto);
+            const tokens = await tokenService.generateToken(userDto);
 
-            tokenService.saveToken(userDto.Id, (await tokens).refreshToken)
+            tokenService.saveToken(userDto.Id, tokens.refreshToken)
             return {
                 ...tokens,
                 user: userDto

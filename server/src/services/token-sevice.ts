@@ -6,11 +6,17 @@ import UserDto from "../dtos/user-dto";
 const prisma = new PrismaClient();
 
 export default class TokenService {
-    async generateToken(payload: UserDto) {
+    async generateToken(userDto: UserDto) {
+        const payload = {
+            Id: userDto.Id,
+            Email: userDto.Email,
+            UserName: userDto.UserName,
+            Activated: userDto.Activated,
+            ActivationLink: userDto.ActivationLink
+        }
         const accessToken = jwt.sign(payload, process.env.JWT_ACCESS_SYCRET!, {
             expiresIn: '15m'
         });
-
         const refreshToken = jwt.sign(payload, process.env.JWT_REFRESH_SYCRET!, {
             expiresIn: '15d'
         });
@@ -47,21 +53,17 @@ export default class TokenService {
     }
 
     async validateAccessToken(token: string) {
-        try {
-            const userData = jwt.verify(token, process.env.JWT_ACCESS_SYCRET!);
-            return userData
-        } catch (error) {
-            return null;
-        }
+
+        const userData = await jwt.verify(token, process.env.JWT_ACCESS_SYCRET!);
+        return userData
+
     }
 
     async validateRefreshToken(token: string) {
-        try {
-            const userData = jwt.verify(token, process.env.JWT_REFRESH_SYCRET!);
-            return userData
-        } catch (error) {
-            return null;
-        }
+
+        const userData = await jwt.verify(token, process.env.JWT_REFRESH_SYCRET!);
+        return userData
+
     }
 
     async findToken(refreshToken: string) {

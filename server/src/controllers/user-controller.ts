@@ -35,12 +35,30 @@ export class UserController {
         }
     }
 
-    static async logout(req: Request, res: Response) {
-
+    static async logout(req: Request, res: Response, next: NextFunction) {
+        try {
+            const refreshToken = req.cookies.refreshToken;
+            const token = await UserService.logout(refreshToken);
+            res.clearCookie('refreshToken');
+            return res.json(token);
+        } catch (error) {
+            next(error);
+        }
     }
 
-    static async refresh(req: Request, res: Response) {
-
+    static async refresh(req: Request, res: Response, next: NextFunction) {
+        try {
+            const refreshToken = req.cookies.refreshToken;
+            const token = await UserService.refresh(refreshToken);
+            res.cookie(
+                'refreshToken',
+                token.refreshToken,
+                { maxAge: 15 * 24 * 60 * 60 * 1000, httpOnly: true }
+            );
+            return res.json(token);
+        } catch (error) {
+            next(error);
+        }
     }
 
     static async activateLink(req: Request, res: Response) {
