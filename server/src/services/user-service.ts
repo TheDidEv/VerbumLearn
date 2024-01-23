@@ -4,9 +4,11 @@ import { v4 as uuidv4 } from 'uuid';
 import UserDto from "../dtos/user-dto";
 import TokenService from './token-sevice';
 import { UserType } from "../types";
+import MailService from "./mail-service";
 
 const prisma = new PrismaClient();
 const tokenService = new TokenService();
+const mailService = new MailService();
 
 export default class UserService {
     static async registration(userData: UserType) {
@@ -29,11 +31,18 @@ export default class UserService {
                 }
             });
 
-            //const mailService.sendActivationLink(newUser.Email, `${process.env.API_URL}/activate/${activateLink}`);
+            await mailService.sendActivationMail(newUser.Email, `${process.env.API_URL}/user/activateLink/${activateLink}`);
 
             const userDto = new UserDto(newUser);
             const tokens = tokenService.generateToken({ ...userDto });
             tokenService.saveToken(userDto.Id, (await tokens).refreshToken);
+
+            await prisma.userCollections.create({
+                data: {
+                    Name: 'AllWords',
+                    UserId: newUser.Id
+                }
+            });
             return {
                 ...tokens,
                 user: userDto
@@ -50,7 +59,10 @@ export default class UserService {
         }
         await prisma.users.update({
             where: { Id: user.Id },
-            data: { ActivationLink: activateLink }
+            data: { 
+                ActivationLink: activateLink,
+                Activated: true
+            }
         });
     }
 

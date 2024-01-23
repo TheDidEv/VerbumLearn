@@ -1,3 +1,9 @@
+//Words - propous words for user
+//Users-UserCollections one-to-many
+//Users-TokenModels one-to-one
+//UserCollections-IntermediateWordsCollections one-to-many
+//UserWords-IntermediateWordsCollections one-to-many
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -15,16 +21,10 @@ model Users {
   Activated      Boolean  @default(false)
   ActivationLink String
   CreateAt       DateTime @default(now())
-  UpdateAt       DateTime @default(now())
-
-  SentFriendRequests     Friends[] @relation("SentFriendRequests")
-  ReceivedFriendRequests Friends[] @relation("ReceivedFriendRequests")
-
-  RejectedRequests RejectFriendRequests[]
 
   Token TokenModels?
 
-  Words Words[]
+  UserCollections UserCollections[]
 }
 
 model TokenModels {
@@ -35,51 +35,43 @@ model TokenModels {
   UserId String @unique
 }
 
-model Friends {
-  Id        String        @id @default(uuid())
-  Status    statusFriends @default(PENDING)
-  createdAt DateTime      @default(now())
-
-  FromUser   Users  @relation("SentFriendRequests", fields: [FromUserId], references: [Id])
-  FromUserId String
-
-  ToUser   Users  @relation("ReceivedFriendRequests", fields: [ToUserId], references: [Id])
-  ToUserId String
-
-  RejectFriendRequests RejectFriendRequests[]
-
-  @@unique([FromUserId, ToUserId])
+model Words {
+  Id             String @id @default(uuid())
+  Word           String
+  UkrTranslate   String
+  CollectionName String
 }
 
-model RejectFriendRequests {
-  Id        String   @id @default(uuid())
-  CreatedAt DateTime @default(now())
+model UserCollections {
+  Id   String @id @default(uuid())
+  Name String
 
   User   Users  @relation(fields: [UserId], references: [Id])
   UserId String
 
-  Request   Friends @relation(fields: [RequestId], references: [Id])
-  RequestId String
-
-  @@unique([UserId, RequestId])
+  IntermediateWWordCollection IntermediateWordsCollections[]
 }
 
-model Words {
-  Id              String     @id @default(uuid())
-  Word            String
-  WordTranslation String
-  Status          statusWord @default(WRONG)
-  CreateAt        DateTime   @default(now())
-  UpdateAt        DateTime   @default(now())
+model IntermediateWordsCollections {
+  Id String @id @default(uuid())
 
-  Users   Users  @relation(fields: [UsersId], references: [Id])
-  UsersId String
+  UserWords UserWords @relation(fields: [UserWord], references: [Id])
+  UserWord  String
+
+  UserCollections UserCollections @relation(fields: [UserColletion], references: [Id])
+  UserColletion   String
 }
 
-enum statusFriends {
-  PENDING
-  ACCEPTED
-  REJECT
+model UserWords {
+  Id        String     @id @default(uuid())
+  Word      String
+  Translate String
+  Priority  Int        @default(4)
+  Status    statusWord @default(WRONG)
+  CreateAt  DateTime   @default(now())
+  UpdateAt  DateTime   @default(now())
+
+  IntermediateWWordCollection IntermediateWordsCollections[]
 }
 
 enum statusWord {

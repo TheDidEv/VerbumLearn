@@ -61,7 +61,13 @@ export class UserController {
         }
     }
 
-    static async activateLink(req: Request, res: Response) {
-
+    static async activateLink(req: Request, res: Response, next: NextFunction) {
+        try {
+            const activatingLink = req.params.link;
+            await UserService.activate(activatingLink);
+            return res.redirect(process.env.CLIENT_URL!);
+        } catch (error) {
+            next(error);
+        }
     }
 }

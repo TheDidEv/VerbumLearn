@@ -53,17 +53,13 @@ export default class TokenService {
     }
 
     async validateAccessToken(token: string) {
-
         const userData = await jwt.verify(token, process.env.JWT_ACCESS_SYCRET!);
         return userData
-
     }
 
     async validateRefreshToken(token: string) {
-
         const userData = await jwt.verify(token, process.env.JWT_REFRESH_SYCRET!);
         return userData
-
     }
 
     async findToken(refreshToken: string) {
