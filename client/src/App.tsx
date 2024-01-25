@@ -5,18 +5,20 @@ import { Header } from './components/header/header';
 import { Rules } from './components/english-rules/rules';
 import { NotFound } from './components/page-not-found/not-found';
 import { Main } from './components/main/main';
+import { Footer } from './components/footer/fotter';
 
 
 function App() {
   return (
-    <div className="App h-lvh bg-indigo-950"> {/*bg-gradient-to-r from-indigo-700 to-indigo-950 */}
+    <div className="App min-h-screen bg-gray-0"> {/*bg-gradient-to-r from-indigo-700 to-indigo-950 */}
       <BrowserRouter>
-      <Header />
-        <Routes>
+        <Header />
+          <Routes>
             <Route index element={<Main />} />
             <Route path='/Rules' element={<Rules />} />
             <Route path='*' element={<NotFound />} />
-        </Routes>
+          </Routes>
+        {/* <Footer /> */}
       </BrowserRouter>
     </div >
   );

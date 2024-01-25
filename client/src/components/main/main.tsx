@@ -1,7 +1,8 @@
 export const Main = () => {
     return (
         <main>
-            <div className="pt-5">
+            {/* className="h-dvh" */}
+            <div >
                 Main
             </div>
         </main>

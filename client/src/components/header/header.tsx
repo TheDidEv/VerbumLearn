@@ -1,12 +1,15 @@
 import { Link, Outlet } from 'react-router-dom';
+import { Logo } from './logo';
 
 export const Header = () => {
     return (
-        <div className='w-full flex items-center justify-between p-6 space-x-6 text-white border-b-2 border-indigo-900 shadow-lg rounded'> {/*shadow-xl || rounded-md*/}
-            LOGO
+        <div className='w-full flex items-center justify-between p-6 space-x-6 border-b-2 border-gray-300 shadow-lg rounded-b-lg'> {/*shadow-xl || rounded-md*/}
+            <div>
+                <Link to='/'><Logo /></Link>
+            </div>
             <div className="flex">
-                <Link to='/' className="mr-4">Home</Link>
-                <Link to='/Rules'>Rules</Link>
+                <Link to='/' className="mr-4 bg-gray-0 hover:bg-gray-100 focus:outline-none rounded">Home</Link>
+                <Link to='/Rules' className='bg-gray-0 hover:bg-gray-100 focus:outline-none rounded'>Rules</Link>
             </div>
             <div>user</div>
             <Outlet />

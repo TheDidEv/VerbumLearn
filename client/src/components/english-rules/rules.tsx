@@ -1,10 +1,9 @@
+import { TensesRules } from "./tenses-rules/tenses-rules";
 
-
-export const Rules = () =>
-{
-    return(
+export const Rules = () => {
+    return (
         <div className="pt-5">
-            Rules Page
+            <TensesRules />
         </div>
     );
 }
