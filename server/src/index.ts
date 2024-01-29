@@ -5,6 +5,7 @@ import { userRouter } from './routers/user-router';
 
 import { PrismaClient } from '@prisma/client';
 import { Words } from './words_db';
+import { collectionWordsRouter } from './routers/collection-words-router';
 
 require("dotenv").config({ path: __dirname + './../.env' });
 
@@ -29,6 +30,7 @@ const main = async () => {
     app.use(express.json())
 
     app.use('/user', userRouter);
+    app.use('/collectionWords', collectionWordsRouter);
 
     app.listen(PORT, () => {
         console.log(`Server was start on port: ${PORT}`)
