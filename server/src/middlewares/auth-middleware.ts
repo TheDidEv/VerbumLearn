@@ -9,7 +9,7 @@ export const checkAuth = async (req: Request, res: Response, next: NextFunction)
         const userData = await tokenService.validateRefreshToken(token);
 
         if (!userData) {
-            console.log(userData, "aaasdasd")
+            res.status(400).send("Unathorized error").redirect('/login');
             return next(new Error("Unathorized error"));
         }
         next();

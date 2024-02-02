@@ -14,7 +14,7 @@ export class UserController {
                 user.refreshToken,
                 { maxAge: 15 * 24 * 60 * 60 * 1000, httpOnly: true }
             );
-            return res.json(user);
+            return res.json(user).status(200);
         } catch (error) {
             next(error);
         }
@@ -29,7 +29,7 @@ export class UserController {
                 user.refreshToken,
                 { maxAge: 15 * 24 * 60 * 60 * 1000, httpOnly: true }
             );
-            return res.json(user);
+            return res.json(user).redirect(process.env.CLIENT_URL + '/Rules');
         } catch (erron) {
             next(erron)
         }
@@ -40,7 +40,7 @@ export class UserController {
             const refreshToken = req.cookies.refreshToken;
             const token = await UserService.logout(refreshToken);
             res.clearCookie('refreshToken');
-            return res.json(token);
+            return res.json(token).status(200);
         } catch (error) {
             next(error);
         }
