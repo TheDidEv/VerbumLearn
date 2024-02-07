@@ -1,20 +1,35 @@
-import axios from "axios";
 import { useState } from "react";
 import AuthService from './../../services/auth-service';
+import { useAppDispatch } from "../../hooks/redux-hooks";
+import { login } from "../../slices/authSlice";
 
 export const Login = () => {
+    const dispatch = useAppDispatch();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const handlerSubmit = (e: any) => {
-        AuthService.LogIn(email, password)
-            .then((res) => console.log(res))
-            .catch((err) => console.log(err));
+    const handlerSubmit = async () => {
+        if (email && password) {
+            try {
+                await dispatch(
+                    login({
+                        Email: email,
+                        Password: password,
+                    })
+                ).unwrap();
+            }
+            catch (error) {
+                console.log(error);
+            }
+        }
+        else {
+            console.log("Error login");
+        }
     }
 
     return (
         <div className="w-60 p-5 flex flex-col bg-gray-100 rounded-lg">
-            <form onSubmit={(e) => { handlerSubmit(e); }}>
+            <form onSubmit={() => { handlerSubmit(); }}>
                 <input
                     className="m-3 rounded-lg"
                     onChange={e => setEmail(e.target.value)}
@@ -33,8 +48,8 @@ export const Login = () => {
             </form>
 
             <button
-                onClick={(e) => { handlerSubmit(e); }}
-                className="m-3 bg-white rounded-lg border  hover:border-gray-300  focus:outline-none"
+                onClick={() => { handlerSubmit(); }}
+                className="m-3 bg-white rounded-lg border hover:border-gray-300  focus:outline-none"
             >
                 Login
             </button>

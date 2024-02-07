@@ -1,15 +1,30 @@
 import { useState } from "react";
 import AuthService from "../../services/auth-service";
+import { useAppDispatch } from "../../hooks/redux-hooks";
+import { register } from "../../slices/authSlice";
 
 export const Registration = () => {
+    const dispatch = useAppDispatch();
+
     const [email, setEmail] = useState('');
     const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
 
-    const hendlerSubmit = (e: any) => {
-        AuthService.Registration(email, password, userName)
-            .then((res) => console.log(res))
-            .catch((err) => console.log(err));
+    const hendlerSubmit = async (e: any) => {
+        try {
+            if (email && userName && password) {
+                await dispatch(
+                    register({
+                        Email: email,
+                        Password: password,
+                        UserName: userName,
+                    })
+                ).unwrap();
+            }
+        } catch (error) {
+            console.log(error);
+        }
+
     }
 
     return (

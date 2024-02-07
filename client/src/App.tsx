@@ -11,9 +11,9 @@ import { Registration } from './components/auth/registration';
 function App() {
   return (
     <div className="App min-h-screen bg-gray-0"> {/*bg-gradient-to-r from-indigo-700 to-indigo-950 */}
-      <Login />
-      {/* <Registration /> */}
-      <BrowserRouter>
+      {/* <Login /> */}
+      <Registration />
+      {/* <BrowserRouter> */}
         {/* <Header /> */}
         <Routes>
           {/* <Route index element={<Main />} /> */}
@@ -21,7 +21,7 @@ function App() {
           {/* <Route path='*' element={<NotFound />} /> */}
         </Routes>
 
-      </BrowserRouter>
+      {/* </BrowserRouter> */}
       {/* <Footer /> */}
     </div >
   );
