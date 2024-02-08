@@ -1,7 +1,7 @@
 import { useState } from "react";
-import AuthService from "../../services/auth-service";
 import { useAppDispatch } from "../../hooks/redux-hooks";
 import { register } from "../../slices/authSlice";
+import { Link } from "react-router-dom";
 
 export const Registration = () => {
     const dispatch = useAppDispatch();
@@ -61,6 +61,8 @@ export const Registration = () => {
             >
                 Registration
             </button>
+            
+            <Link to='/login' className='bg-gray-0 hover:bg-gray-100 focus:outline-none rounded'>Login</Link>
         </div>
     );
 }

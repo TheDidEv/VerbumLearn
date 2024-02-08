@@ -1,7 +1,7 @@
 import { useState } from "react";
-import AuthService from './../../services/auth-service';
 import { useAppDispatch } from "../../hooks/redux-hooks";
 import { login } from "../../slices/authSlice";
+import { Link } from "react-router-dom";
 
 export const Login = () => {
     const dispatch = useAppDispatch();
@@ -53,6 +53,7 @@ export const Login = () => {
             >
                 Login
             </button>
+            <Link to='/register' className='bg-gray-0 hover:bg-gray-100 focus:outline-none rounded'>Register</Link>
         </div>
     );
 }

@@ -34,8 +34,8 @@ export default class UserService {
             await mailService.sendActivationMail(newUser.Email, `${process.env.API_URL}/user/activateLink/${activateLink}`);
 
             const userDto = new UserDto(newUser);
-            const tokens = tokenService.generateToken({ ...userDto });
-            tokenService.saveToken(userDto.Id, (await tokens).refreshToken);
+            const tokens = await tokenService.generateToken({ ...userDto });
+            tokenService.saveToken(userDto.Id, tokens.refreshToken);
 
             await prisma.userCollections.create({
                 data: {
@@ -59,7 +59,7 @@ export default class UserService {
         }
         await prisma.users.update({
             where: { Id: user.Id },
-            data: { 
+            data: {
                 ActivationLink: activateLink,
                 Activated: true
             }
