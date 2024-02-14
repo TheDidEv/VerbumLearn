@@ -28,41 +28,44 @@ export const Registration = () => {
     }
 
     return (
-        <div className="w-60 p-5 flex flex-col bg-gray-100 rounded-lg">
-            <form onSubmit={(e) => { hendlerSubmit(e) }}>
-                <input
-                    className="m-3 rounded-lg"
-                    onChange={e => setEmail(e.target.value)}
-                    value={email}
-                    type="email"
-                    placeholder="Email"
-                />
+        <div className="flex justify-center">
+            <div className="w-60 p-5 flex flex-col bg-gray-100 rounded-lg">
+                <form onSubmit={(e) => { hendlerSubmit(e) }}>
+                    <input
+                        className="m-3 rounded-lg"
+                        onChange={e => setEmail(e.target.value)}
+                        value={email}
+                        type="email"
+                        placeholder="Email"
+                    />
 
-                <input
-                    className="m-3 rounded-lg"
-                    onChange={e => setUserName(e.target.value)}
-                    value={userName}
-                    type="text"
-                    placeholder="Username"
-                />
+                    <input
+                        className="m-3 rounded-lg"
+                        onChange={e => setUserName(e.target.value)}
+                        value={userName}
+                        type="text"
+                        placeholder="Username"
+                    />
 
-                <input
-                    className="m-3 rounded-lg"
-                    onChange={e => setPassword(e.target.value)}
-                    value={password}
-                    type="password"
-                    placeholder="password"
-                />
-            </form>
+                    <input
+                        className="m-3 rounded-lg"
+                        onChange={e => setPassword(e.target.value)}
+                        value={password}
+                        type="password"
+                        placeholder="password"
+                    />
+                </form>
 
-            <button
-                onClick={(e) => { hendlerSubmit(e) }}
-                className="m-3 bg-white rounded-lg border  hover:border-gray-300  focus:outline-none"
-            >
-                Registration
-            </button>
-            
-            <Link to='/login' className='bg-gray-0 hover:bg-gray-100 focus:outline-none rounded'>Login</Link>
+                <button
+                    onClick={(e) => { hendlerSubmit(e) }}
+                    className="m-3 bg-white rounded-lg border  hover:border-gray-300  focus:outline-none"
+                >
+                    Registration
+                </button>
+
+                <Link to='/login' className="m-3 bg-white rounded-lg border hover:border-gray-300  focus:outline-none">Login</Link>
+            </div>
         </div>
+
     );
 }

@@ -1,6 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import CollectionWords from "../services/collection-words.service";
-import { runInThisContext } from "vm";
+import CollectionWords from "../services/collection-service";
 
 export class CollectionWordsController {
     static async createCollection(req: Request, res: Response, next: NextFunction) {
