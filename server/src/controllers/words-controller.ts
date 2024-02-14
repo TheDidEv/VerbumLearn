@@ -20,7 +20,11 @@ export class WordController {
 
     static editWord = async (req: Request, res: Response, next: NextFunction) => {
         try {
+            const id = req.params.id;
+            const { word, translate } = req.body;
 
+            const edit = await WordService.editWord(id, word, translate);
+            res.status(200).json(edit);
         } catch (error) {
             next(error);
         }
@@ -29,7 +33,9 @@ export class WordController {
 
     static getAllWords = async (req: Request, res: Response, next: NextFunction) => {
         try {
-
+            const token = req.cookies.refreshToken;
+            const data = await WordService.getAllWords(token);
+            res.status(200).json(data);
         } catch (error) {
             next(error);
         }

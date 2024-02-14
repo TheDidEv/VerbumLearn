@@ -23,7 +23,7 @@ export default class WordService {
                 UserId: userId.UserId,
                 Name: allWord,
             }
-        })
+        });
 
         if (!userConcretCollection) {
             return new Error("Userc collection not found");
@@ -44,5 +44,43 @@ export default class WordService {
         });
 
         return createWord;
+    }
+
+    static editWord = async (id: string, word: string, translate: string) => {
+        const findWord = await prisma.userWords.findFirst({ where: { Id: id } });
+
+        if (!findWord) {
+            return new Error("Word not found");
+        }
+
+        const updateWord = await prisma.userWords.update({
+            where: { Id: id },
+            data: {
+                Word: word,
+                Translate: translate,
+                UpdateAt: new Date(),
+            }
+        });
+        return updateWord;
+    }
+
+    static getAllWords = async (token: string) => {
+        const userId = await prisma.tokenModels.findFirst({ where: { RefreshToken: token } });
+
+        if (!userId) {
+            return new Error("User not find");
+        }
+
+        const collectionAllId = await prisma.userCollections.findFirst({ where: { Name: "AllWords", UserId: userId.UserId } });
+
+        const intermediateCollections = await prisma.intermediateWordsCollections.findMany({ where: { UserColletion: collectionAllId?.Id } });
+
+        const words: any[] = [];
+        for (const elem of intermediateCollections) {
+            const word = await prisma.userWords.findFirst({ where: { Id: elem.UserWord } });
+            words.push(word);
+        };
+
+        return words;
     }
 }
