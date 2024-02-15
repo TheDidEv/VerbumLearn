@@ -17,7 +17,6 @@ export class WordController {
         }
     }
 
-
     static editWord = async (req: Request, res: Response, next: NextFunction) => {
         try {
             const id = req.params.id;
@@ -30,7 +29,6 @@ export class WordController {
         }
     }
 
-
     static getAllWords = async (req: Request, res: Response, next: NextFunction) => {
         try {
             const token = req.cookies.refreshToken;
@@ -41,28 +39,34 @@ export class WordController {
         }
     }
 
+    static getWord = async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const wordId = req.params.id
+            const data = await WordService.getWordById(wordId);
+            res.status(200).json(data);
+        } catch (error) {
+            next(error);
+        }
+    }
 
     static getByCategoryWords = async (req: Request, res: Response, next: NextFunction) => {
         try {
+            const token = req.cookies.refreshToken;
+            const categoryName = req.body;
+            const data = await WordService.getWordByCategory(categoryName, token);
 
+            res.status(200).json(data);
         } catch (error) {
             next(error);
         }
     }
-
-
-    static getWord = async (req: Request, res: Response, next: NextFunction) => {
-        try {
-
-        } catch (error) {
-            next(error);
-        }
-    }
-
 
     static deleteWord = async (req: Request, res: Response, next: NextFunction) => {
         try {
+            const wordId = req.params.id;
+            const data = await WordService.deleteWordById(wordId);
 
+            res.status(200).json(data);
         } catch (error) {
             next(error);
         }

@@ -25,7 +25,7 @@ export default class WordService {
             }
         });
 
-        if (!userConcretCollection) {
+        if (!userConcretCollection && !userConcretCollection) {
             return new Error("Userc collection not found");
         }
 
@@ -82,5 +82,41 @@ export default class WordService {
         };
 
         return words;
+    }
+
+    static getWordById = async (id: string) => {
+        const word = await prisma.userWords.findFirst({ where: { Id: id } });
+        return word;
+    }
+
+    static getWordByCategory = async (categoryName: string, token: string) => {
+        const userId = await prisma.tokenModels.findFirst({ where: { RefreshToken: token } });
+
+        if (!userId) {
+            return new Error("User not find");
+        }
+
+        const collectionAllId = await prisma.userCollections.findFirst({ where: { Name: categoryName, UserId: userId.UserId } });
+
+        const intermediateCollections = await prisma.intermediateWordsCollections.findMany({ where: { UserColletion: collectionAllId?.Id } });
+
+        const words: any[] = [];
+        for (const elem of intermediateCollections) {
+            const word = await prisma.userWords.findFirst({ where: { Id: elem.UserWord } });
+            words.push(word);
+        };
+
+        return words;
+    }
+
+    static deleteWordById = async (id: string) => {
+        const intermmidiateId = await prisma.intermediateWordsCollections.findMany({ where: { UserWord: id } });
+
+        for (let elem of intermmidiateId) {
+            await prisma.intermediateWordsCollections.deleteMany({ where: { Id: elem.Id } });
+        }
+        const delWord = await prisma.userWords.delete({ where: { Id: id } });
+
+        return delWord;
     }
 }

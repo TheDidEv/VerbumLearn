@@ -1,5 +1,7 @@
 import { Router } from "express";
 import { WordController } from "../controllers/words-controller";
+import { checkAuth } from "../middlewares/auth-middleware";
+
 
 export const wordRouter = Router();
 
@@ -9,7 +11,7 @@ wordRouter.put('/editWord/:id', WordController.editWord);
 
 wordRouter.get('/getAllWords', WordController.getAllWords);
 
-wordRouter.get('/getWord', WordController.getWord);
+wordRouter.get('/getWord/:id', checkAuth, WordController.getWord);
 
 wordRouter.get('/getByCategory/:nameCategory', WordController.getByCategoryWords);
 
