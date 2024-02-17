@@ -129,4 +129,8 @@ export default class UserService {
             user: userDto
         }
     }
+
+    static async getUserInfo(refreshToken: string) {
+
+    }
 }

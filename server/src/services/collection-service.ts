@@ -54,7 +54,10 @@ export default class CollectionWords {
 
     static async deleteCollection(id: string) {
         const collection = await prisma.userCollections.delete({
-            where: { Id: id }
+            where: { Id: id },
+            include: {
+                IntermediateWWordCollection: true,
+            }
         });
         return collection;
     }

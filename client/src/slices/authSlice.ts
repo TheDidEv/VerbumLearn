@@ -1,5 +1,6 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axiosInstance from '../api/axiosInstance';
+import { log } from "console";
 
 // Initial user type
 type User = {
@@ -14,7 +15,7 @@ type NewUser = User & {
 type UserBasicInfo = {
     Id: string;
     Email: string;
-    Username: string;
+    UserName: string;
 }
 
 type UserProfileData = {

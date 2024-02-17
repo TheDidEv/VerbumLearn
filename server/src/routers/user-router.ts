@@ -13,3 +13,5 @@ userRouter.post('/logout', UserController.logout);
 userRouter.get('/activateLink/:link', UserController.activateLink);
 
 userRouter.get('/refresh', UserController.refresh);
+
+userRouter.get('/getData', UserController.getData)

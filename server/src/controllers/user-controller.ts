@@ -70,4 +70,12 @@ export class UserController {
             next(error);
         }
     }
+
+    static async getData(req: Request, res: Response, next: NextFunction) {
+        try {
+
+        } catch (error) {
+
+        }
+    }
 }

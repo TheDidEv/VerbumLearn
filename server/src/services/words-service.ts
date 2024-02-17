@@ -11,13 +11,6 @@ export default class WordService {
         if (!userId) {
             return new Error("User id not found");
         }
-
-        const userConcretCollection = await prisma.userCollections.findFirst({
-            where: {
-                UserId: userId.UserId,
-                Name: wordType.IntermediateWWordCollectionName
-            }
-        });
         const userAllWordCollection = await prisma.userCollections.findFirst({
             where: {
                 UserId: userId.UserId,
@@ -25,8 +18,33 @@ export default class WordService {
             }
         });
 
-        if (!userConcretCollection && !userConcretCollection) {
-            return new Error("Userc collection not found");
+        if (wordType.IntermediateWWordCollectionName) {
+            const userConcretCollection = await prisma.userCollections.findFirst({
+                where: {
+                    UserId: userId.UserId,
+                    Name: wordType.IntermediateWWordCollectionName
+                }
+            });
+
+            if (!userConcretCollection) {
+                return new Error("User collection not found");
+            }
+
+            const createWord = await prisma.userWords.create({
+                data: {
+                    Word: wordType.Word,
+                    Translate: wordType.Translate,
+
+                    IntermediateWWordCollection: {
+                        create: [
+                            { UserColletion: userConcretCollection.Id, },
+                            { UserColletion: userAllWordCollection!.Id },
+                        ]
+                    },
+                }
+            });
+
+            return createWord;
         }
 
         const createWord = await prisma.userWords.create({
@@ -35,15 +53,30 @@ export default class WordService {
                 Translate: wordType.Translate,
 
                 IntermediateWWordCollection: {
-                    create: [
-                        { UserColletion: userConcretCollection.Id, },
+                    create:
                         { UserColletion: userAllWordCollection!.Id },
-                    ]
                 },
             }
         });
 
         return createWord;
+    }
+
+    static addCatToWord = async (wordId: string, categoryName: string) => {
+        const categoryId = await prisma.userCollections.findFirst({ where: { Name: categoryName } });
+        const wordID = await prisma.userWords.findFirst({ where: { Id: wordId } });
+
+        if (!wordID && !categoryId) {
+            return new Error("Not found wordId or category name");
+        }
+
+        const addCat = await prisma.intermediateWordsCollections.create({
+            data: {
+                UserWord: wordID!.Id,
+                UserColletion: categoryId!.Id
+            }
+        });
+        return addCat;
     }
 
     static editWord = async (id: string, word: string, translate: string) => {

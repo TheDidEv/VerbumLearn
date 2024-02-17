@@ -8,10 +8,21 @@ export class WordController {
         try {
             const token = req.cookies.refreshToken;
             const data: WordType = req.body;
-            console.log(data)
+
             const createWord = await WordService.addWord(data, token);
 
             res.status(200).json(createWord);
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    static addCategoryToWord = async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const { wordId, categoryName } = req.body;
+            const data = await WordService.addCatToWord(wordId, categoryName)
+
+            res.status(200).json(data);
         } catch (error) {
             next(error);
         }
