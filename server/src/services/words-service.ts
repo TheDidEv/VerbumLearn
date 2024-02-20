@@ -152,4 +152,10 @@ export default class WordService {
 
         return delWord;
     }
+
+    static getServiceWord = async () => {
+        const allServiceWords = await prisma.words.findMany();
+
+        return allServiceWords;
+    }
 }

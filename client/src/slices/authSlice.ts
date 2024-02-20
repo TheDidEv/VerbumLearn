@@ -1,6 +1,5 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axiosInstance from '../api/axiosInstance';
-import { log } from "console";
 
 // Initial user type
 type User = {
@@ -43,15 +42,15 @@ const initialState: AuthApiState = {
 // Make axios request (check ../api/axiosInstance)
 export const login = createAsyncThunk("login", async (data: User) => {
     const response = await axiosInstance.post("/user/login", data);
-    const resData = response.data;
-    //console.log(resData);
+    const resData = response.data.user;
+    // console.log(resData);
     localStorage.setItem("userInfo", JSON.stringify(resData));
     return resData;
 });
 
 export const register = createAsyncThunk("register", async (data: NewUser) => {
     const response = await axiosInstance.post("/user/registration", data);
-    const resData = response.data;
+    const resData = response.data.user;
     //console.log(resData);
     localStorage.setItem("userInfo", JSON.stringify(resData));
     return resData;
@@ -59,7 +58,7 @@ export const register = createAsyncThunk("register", async (data: NewUser) => {
 
 export const logout = createAsyncThunk("logout", async () => {
     const response = await axiosInstance.post("/user/logout", {});
-    const resData = response.data;
+    const resData = response.data.user;
 
     localStorage.removeItem("userInfo");
     return resData;

@@ -1,13 +1,18 @@
 //chatGPT was created, so errors are possible
 export const Words = [
     {
-        Word: 'Orange',
-        UkrTranslate: 'Апельсин',
+        Word: 'Молоток',
+        UkrTranslate: 'Hammer',
+        CollectionName: 'Tools'
+    },
+    {
+        Word: 'Апельсин',
+        UkrTranslate: 'Orange',
         CollectionName: 'Fruits'
     },
     {
-        Word: 'Table',
-        UkrTranslate: 'Стіл',
+        Word: 'Стіл',
+        UkrTranslate: 'Table',
         CollectionName: 'Furniture'
     },
     {

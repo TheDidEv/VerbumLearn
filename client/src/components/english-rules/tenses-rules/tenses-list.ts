@@ -286,30 +286,4 @@ export const tenses = [
             markers: 'for – протягом (до моменту в майбутньому); by the time – до того моменту, коли; how long – як довго; all day/week/month/year – весь день/тиждень/місяць/рік; the whole day/week/month/year – цілий день/тиждень/місяць/рік'
         },
     },
-    {
-        name: "Past Perfect Continuous",
-        appointment: 'Для позначення тривалої дії, яка тривала до певного моменту в минулому.',
-        rules_statement: {
-            rule_HeShiIt: 'Для He/She/It використовуємо "had been" перед смисловим дієсловом у -ing формі (He/She/It + had been + V-ing + ...)',
-            rule_IYouWeThey: 'Для I/You/We/They використовуємо "had been" перед смисловим дієсловом у -ing формі (I/You/We/They + had been + V-ing + ...)',
-            example_IYouWeThey: 'I had been studying French for five years before I moved to Paris. – Я вивчав/вивчала французьку мову протягом п`яти років до того, як я переїхав/ переїхала до Парижу.You had been speaking English fluently for a year before you went to London. – Ти розмовляв/ розмовляла англійською вільно протягом року до того, як ти поїхав / поїхала до Лондона.We had been playing the violins together since childhood before the concert. – Ми грали на скрипках разом з дитинства до часу концерту.Cats had been liking milk until they discovered another favorite treat. – Коти любили молоко до того моменту, поки не відкрили іншу улюблену ласощі.',
-            example_HeShiIt: 'She had been speaking English well before she moved to the USA. – Вона говорила англійською добре до того, як вона переїхала до США. He had been playing the violin for many years before the concert. – Він грав на скрипці протягом багатьох років до часу концерту. Simon`s cat had been enjoying hunting before it discovered other entertainment. – Кіт Саймона насолоджувався полюванням до того, як він відкрив для себе інші розваги.'
-        },
-        rules_denial: {
-            rule_HeShiIt: 'Для He/She/It в запереченні використовуємо "had not been" або "hadn`t been" перед смисловим дієсловом у -ing формі (He/She/It + had not been + V-ing + ... або He/She/It + hadn`t been + V-ing + ...)',
-            rule_IYouWeThey: 'Для I/You/We/They в запереченні використовуємо "had not been" або "hadn`t been" перед смисловим дієсловом у -ing формі (I/You/We/They + had not been + V-ing + ... або I/You/We/They + hadn`t been + V-ing + ...)',
-            example_IYouWeThey: 'I had not been studying French for very long before I moved to Paris. – Я не вивчав/вивчала французьку мову дуже довго до того, як я переїхав/переїхала до Парижу. They had not been playing the violin together before the concert. – Вони не грали на скрипках разом до часу концерту. Cats hadn`t been liking fish before they tried it. – Коти не любили рибу до того, як спробували її.',
-            example_HeShiIt: 'She had not been speaking English well before she moved to the USA. – Вона не говорила англійською добре до того, як вона переїхала до США. He hadn`t been playing the violin for very long before the concert. – Він не грав на скрипці дуже довго до часу концерту. Simon`s cat hadn`t been enjoying hunting before it discovered other entertainment. – Кіт Саймона не насолоджувався полюванням до того, як він відкрив для себе інші розваги.'
-        },
-        rules_question: {
-            rule_HeShiIt: 'Для He/She/It в питанні ставимо "had been" перед підметом, після чого смислове дієслово у -ing формі (Had + He/She/It + been + V-ing + ...)?',
-            rule_IYouWeThey: 'Для I/You/We/They в питанні ставимо "had been" перед підметом, після чого смислове дієслово у -ing формі (Had + I/You/We/They + been + V-ing + ...)?',
-            example_IYouWeThey: 'Had I been studying French for very long before I moved to Paris? – Чи я вивчав/вивчала французьку мову дуже довго до того, як я переїхав/переїхала до Парижу? Had they been playing the violin together before the concert? – Чи вони грали на скрипках разом до часу концерту? Had cats been liking fish before they tried it? – Чи коти любили рибу до того, як спробували її?',
-            example_HeShiIt: 'Had she been speaking English well before she moved to the USA? – Чи вона говорила англійською добре до того, як вона переїхала до США? Had he been playing the violin for very long before the concert? – Чи він грав на скрипці дуже довго до часу концерту? Had Simon`s cat been enjoying hunting before it discovered other entertainment? – Чи кіт Саймона насолоджувався полюванням до того, як він відкрив для себе інші розваги?'
-        },
-        tenses_marker: {
-            rules: 'Past Perfect Continuous може вживатися з певними словами та виразами, що вказують на тривалість дії до певного моменту в минулому.',
-            markers: 'for – протягом (до моменту в минулому); by the time – до того моменту, коли; how long – як довго; all day/week/month/year – весь день/тиждень/місяць/рік; the whole day/week/month/year – цілий день/тиждень/місяць/рік'
-        },
-    },
 ]

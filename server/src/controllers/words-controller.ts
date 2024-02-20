@@ -82,4 +82,14 @@ export class WordController {
             next(error);
         }
     }
+
+    static getAllServiceWords = async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const data = await WordService.getServiceWord();
+
+            res.status(200).json(data);
+        } catch (error) {
+            next(error);
+        }
+    }
 }
