@@ -8,6 +8,8 @@ wordRouter.post('/addWord', WordController.addWord);
 
 wordRouter.post('/addCategoryToWord', WordController.addCategoryToWord);
 
+wordRouter.post('/serviceWordToUserCat', WordController.serviceWordToUserCat)
+
 wordRouter.put('/editWord/:id', WordController.editWord);
 
 wordRouter.get('/getAllWords', WordController.getAllWords);

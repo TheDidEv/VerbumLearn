@@ -28,7 +28,7 @@ export const Login = () => {
     }
 
     return (
-        <div className="flex justify-center">
+        <div className="flex justify-center py-60">
             <div className="w-60 p-5 flex flex-col bg-gray-100 rounded-lg">
                 <form onSubmit={() => { handlerSubmit(); }}>
                     <input

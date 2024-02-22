@@ -11,7 +11,7 @@ export class WordController {
 
             const createWord = await WordService.addWord(data, token);
 
-            res.status(200).json(createWord);
+            res.status(201).json(createWord);
         } catch (error) {
             next(error);
         }
@@ -22,7 +22,18 @@ export class WordController {
             const { wordId, categoryName } = req.body;
             const data = await WordService.addCatToWord(wordId, categoryName)
 
-            res.status(200).json(data);
+            res.status(201).json(data);
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    static serviceWordToUserCat = async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const { wordId, userId } = req.body;
+            const data = WordService.serviceWordToUserCategory(wordId, userId)
+
+            res.status(201).json(data);
         } catch (error) {
             next(error);
         }

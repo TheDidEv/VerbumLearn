@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux-hooks"
 import { getAllWordServ } from "../../slices/serviceWordsSlice";
+import { serviceWordToUSerCollection } from "../../services/service-words";
 
 
 // TODO: finish func - add service word to user collection
@@ -8,9 +9,25 @@ export const ServiceWords = () => {
     const dispatch = useAppDispatch();
     const data = useAppSelector((state) => state.serviceWord.words);
 
+    const [userId, sestUserId]: any = useState();
+    const userProfilDataInfo = useAppSelector((state) => state.auth.basicUserInfo);
+
     useEffect(() => {
-        dispatch(getAllWordServ()).unwrap();
-    }, [dispatch])
+        function getServiceWords() {
+            dispatch(getAllWordServ()).unwrap();
+        }
+
+        function setId() {
+            sestUserId(userProfilDataInfo?.Id);
+        }
+        getServiceWords();
+        setId();
+    }, [dispatch, userId])
+
+    const onClickHandler = (wordId: string, userId: string) => {
+        const b = serviceWordToUSerCollection(wordId, userId);
+        console.log(b)
+    }
 
     return (
         <ul className="flex flex-wrap justify-between m-5">
@@ -20,7 +37,12 @@ export const ServiceWords = () => {
                     <div className="bg-white rounded-lg">{obj.Word}</div>
                     <div className="bg-green-100 rounded-lg my-2">{obj.UkrTranslate}</div>
                     <div className="bg-red-100 rounded-lg">{obj.CollectionName}</div>
-                    <button className="my-2 w-20 bg-gray-200 hover:bg-white focus:outline-none rounded-lg">Button</button>
+                    <button
+                        className="my-2 w-20 bg-gray-200 hover:bg-white focus:outline-none rounded-lg"
+                        onClick={() => onClickHandler(obj.Id, userId)}
+                    >
+                        Button
+                    </button>
 
                 </li>
             ))}

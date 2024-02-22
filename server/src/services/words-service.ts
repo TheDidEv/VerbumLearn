@@ -79,6 +79,71 @@ export default class WordService {
         return addCat;
     }
 
+    static serviceWordToUserCategory = async (wordId: string, uId: string) => {
+        const serviceWord = await prisma.words.findFirst({ where: { Id: wordId } });
+        const userId = await prisma.users.findFirst({ where: { Id: uId } });
+        const allWord = 'AllWords'
+
+        if (!serviceWord || !userId) {
+            return new Error("Service word or user not found");
+        }
+
+        const checkUserCat = await prisma.userCollections.findFirst({
+            where: {
+                UserId: userId.Id,
+                Name: serviceWord.CollectionName
+            }
+        });
+
+        const userAllWordsCat = await prisma.userCollections.findFirst({
+            where: {
+                UserId: userId.Id,
+                Name: allWord
+            }
+        });
+
+        if (checkUserCat) {
+            const newWord = await prisma.userWords.create({
+                data: {
+                    Word: serviceWord?.UkrTranslate!,
+                    Translate: serviceWord?.Word!,
+
+                    IntermediateWWordCollection: {
+                        create: [
+                            { UserColletion: checkUserCat.Id },
+                            { UserColletion: userAllWordsCat!.Id }
+                        ]
+                    }
+                }
+            });
+            return newWord;
+        }
+
+        // Create new user category
+        const newUserCat = await prisma.userCollections.create({
+            data: {
+                Name: serviceWord.CollectionName,
+                UserId: userId.Id
+            }
+        });
+
+        const newWord = await prisma.userWords.create({
+            data: {
+                Word: serviceWord?.UkrTranslate!,
+                Translate: serviceWord?.Word!,
+
+                IntermediateWWordCollection: {
+                    create: [
+                        { UserColletion: newUserCat.Id },
+                        { UserColletion: userAllWordsCat!.Id }
+                    ]
+                }
+            }
+        });
+
+        return newWord;
+    }
+
     static editWord = async (id: string, word: string, translate: string) => {
         const findWord = await prisma.userWords.findFirst({ where: { Id: id } });
 

@@ -43,16 +43,18 @@ const initialState: AuthApiState = {
 export const login = createAsyncThunk("login", async (data: User) => {
     const response = await axiosInstance.post("/user/login", data);
     const resData = response.data.user;
-    // console.log(resData);
-    localStorage.setItem("userInfo", JSON.stringify(resData));
+    const user = JSON.stringify(resData)
+
+    localStorage.setItem("userInfo", user);
     return resData;
 });
 
 export const register = createAsyncThunk("register", async (data: NewUser) => {
     const response = await axiosInstance.post("/user/registration", data);
     const resData = response.data.user;
-    //console.log(resData);
-    localStorage.setItem("userInfo", JSON.stringify(resData));
+    const user = JSON.stringify(resData)
+
+    localStorage.setItem("userInfo", JSON.stringify(user));
     return resData;
 });
 

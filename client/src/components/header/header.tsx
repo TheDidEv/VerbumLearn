@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux-hooks';
 
 export const Header = () => {
-    const dispatch = useAppDispatch();
     const [username, setUsername]: any = useState();
     const userProfilDataInfo = useAppSelector((state) => state.auth.basicUserInfo);
 
@@ -24,7 +23,9 @@ export const Header = () => {
                 <Link to='/' className="mr-4 bg-gray-0 hover:bg-gray-100 focus:outline-none rounded">Home</Link>
                 <Link to='/Rules' className='bg-gray-0 hover:bg-gray-100 focus:outline-none rounded'>Rules</Link>
             </div>
-            <div>{username}</div>
+            <div>
+                <Link to='/userPage'>{username}</Link>    
+            </div>
             <Outlet />
         </div>
     );
