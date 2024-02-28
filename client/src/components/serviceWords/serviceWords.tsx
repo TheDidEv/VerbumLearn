@@ -3,7 +3,6 @@ import { useAppDispatch, useAppSelector } from "../../hooks/redux-hooks"
 import { getAllWordServ } from "../../slices/serviceWordsSlice";
 import { serviceWordToUSerCollection } from "../../services/service-words";
 
-
 // TODO: finish func - add service word to user collection
 export const ServiceWords = () => {
     const dispatch = useAppDispatch();
@@ -25,8 +24,7 @@ export const ServiceWords = () => {
     }, [dispatch, userId])
 
     const onClickHandler = (wordId: string, userId: string) => {
-        const b = serviceWordToUSerCollection(wordId, userId);
-        console.log(b)
+        serviceWordToUSerCollection(wordId, userId);
     }
 
     return (

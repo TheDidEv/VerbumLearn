@@ -26,10 +26,8 @@ const initialState: serviceWordsApi = {
 export const getAllWordServ = createAsyncThunk('getAllSerrviceWords', async () => {
     const response = await getAllServiceWords();
     const resData = response.data;
-    // console.log("resData: ", resData);
     word = [...resData];
-    // console.log(word)
-    // localStorage.setItem("words", JSON.stringify(word));
+
     return resData;
 });
 

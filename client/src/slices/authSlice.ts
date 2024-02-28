@@ -42,19 +42,29 @@ const initialState: AuthApiState = {
 // Make axios request (check ../api/axiosInstance)
 export const login = createAsyncThunk("login", async (data: User) => {
     const response = await axiosInstance.post("/user/login", data);
+
+    const resAllData = response.data;
+    const allData = JSON.stringify(resAllData);
+
     const resData = response.data.user;
     const user = JSON.stringify(resData)
 
+    localStorage.setItem("userAllData", allData);
     localStorage.setItem("userInfo", user);
     return resData;
 });
 
 export const register = createAsyncThunk("register", async (data: NewUser) => {
     const response = await axiosInstance.post("/user/registration", data);
+
+    const resAllData = response.data;
+    const allData = JSON.stringify(resAllData);
+
     const resData = response.data.user;
     const user = JSON.stringify(resData)
 
-    localStorage.setItem("userInfo", JSON.stringify(user));
+    localStorage.setItem("userAllData", allData);
+    localStorage.setItem("userInfo", user);
     return resData;
 });
 
@@ -62,6 +72,7 @@ export const logout = createAsyncThunk("logout", async () => {
     const response = await axiosInstance.post("/user/logout", {});
     const resData = response.data.user;
 
+    localStorage.removeItem('userAllData');
     localStorage.removeItem("userInfo");
     return resData;
 });

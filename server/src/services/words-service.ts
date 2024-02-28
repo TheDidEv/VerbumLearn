@@ -102,6 +102,20 @@ export default class WordService {
             }
         });
 
+        const interMidiateAllWords = await prisma.intermediateWordsCollections.findMany({
+            where: { UserColletion: userAllWordsCat?.Id }
+        });
+
+        for (const obj of interMidiateAllWords) {
+            const userWords = await prisma.userWords.findFirst({ where: { Id: obj.UserWord } });
+
+            const userWord = userWords?.Word;
+            const servWord = serviceWord.UkrTranslate;
+            if (userWord == servWord) {
+                return new Error("User collection not found");
+            }
+        }
+
         if (checkUserCat) {
             const newWord = await prisma.userWords.create({
                 data: {

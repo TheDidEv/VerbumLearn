@@ -8,6 +8,6 @@ collectionWordsRouter.post('/create', checkAuth, CollectionWordsController.creat
 
 collectionWordsRouter.put('/update', checkAuth, CollectionWordsController.updateCollection);
 
-collectionWordsRouter.get('/userCollections', checkAuth, CollectionWordsController.getAllCollections);
+collectionWordsRouter.get('/userCollections/:id', checkAuth, CollectionWordsController.getAllCollections);
 
 collectionWordsRouter.delete('/delete', checkAuth, CollectionWordsController.deleteCollection);

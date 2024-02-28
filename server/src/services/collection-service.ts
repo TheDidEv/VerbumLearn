@@ -37,17 +37,17 @@ export default class CollectionWords {
         return newColelction;
     }
 
-    static async getAllCollections(token: string) {
-        const userIDByToken = await prisma.tokenModels.findFirst({
-            where: { RefreshToken: token }
+    static async getAllCollections(userId: string) {
+        const userById = await prisma.users.findFirst({
+            where: { Id: userId }
         });
 
-        if (!userIDByToken) {
+        if (!userById) {
             return new Error('User not login');
         }
 
         const allCollections = await prisma.userCollections.findMany({
-            where: { UserId: userIDByToken.UserId }
+            where: { UserId: userById.Id }
         });
         return allCollections;
     }
