@@ -1,5 +1,4 @@
 import axiosInstance from "../api/axiosInstance";
-import { useAppSelector } from "../hooks/redux-hooks";
 
 const collectionPath = "/collectionWords";
 

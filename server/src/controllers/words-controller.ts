@@ -73,9 +73,8 @@ export class WordController {
 
     static getByCategoryWords = async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const token = req.cookies.refreshToken;
-            const categoryName = req.body;
-            const data = await WordService.getWordByCategory(categoryName, token);
+            const categoryId = req.params.catId;
+            const data = await WordService.getWordByCategory(categoryId);
 
             res.status(200).json(data);
         } catch (error) {

@@ -13,6 +13,7 @@ import { ServiceWords } from './components/serviceWords/serviceWords';
 import { Collection } from './components/userCollection/collection';
 import { Quiz } from './components/quiz/quiz';
 import { UserPage } from './components/userPage/userPage';
+import { Words } from './components/words/words';
 
 function App() {
   const getLocation = useLocation();
@@ -35,7 +36,8 @@ function App() {
           <Route path='/serviceWords' element={<ServiceWords />} />
           <Route path='/collection' element={<Collection />} />
           <Route path='/quiz' element={<Quiz />} />
-          <Route path='userPage' element={<UserPage />} />
+          <Route path='/userPage' element={<UserPage />} />
+          <Route path='/wordsByCategory' element={<Words />} />
           <Route path='*' element={<NotFound />} />
         </Route>
 

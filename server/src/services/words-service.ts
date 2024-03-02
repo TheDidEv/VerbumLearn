@@ -201,14 +201,8 @@ export default class WordService {
         return word;
     }
 
-    static getWordByCategory = async (categoryName: string, token: string) => {
-        const userId = await prisma.tokenModels.findFirst({ where: { RefreshToken: token } });
-
-        if (!userId) {
-            return new Error("User not find");
-        }
-
-        const collectionAllId = await prisma.userCollections.findFirst({ where: { Name: categoryName, UserId: userId.UserId } });
+    static getWordByCategory = async (categoryId: string) => {
+        const collectionAllId = await prisma.userCollections.findFirst({ where: { Id: categoryId } });
 
         const intermediateCollections = await prisma.intermediateWordsCollections.findMany({ where: { UserColletion: collectionAllId?.Id } });
 

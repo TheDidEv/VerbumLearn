@@ -16,7 +16,7 @@ wordRouter.get('/getAllWords', WordController.getAllWords);
 
 wordRouter.get('/getWord/:id', checkAuth, WordController.getWord);
 
-wordRouter.get('/getByCategory/:nameCategory', WordController.getByCategoryWords);
+wordRouter.get('/getByCategory/:catId', WordController.getByCategoryWords);
 
 wordRouter.get('/getAllServiceWords', WordController.getAllServiceWords);
 
