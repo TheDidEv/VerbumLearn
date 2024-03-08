@@ -1,5 +1,6 @@
 import { useAppDispatch, useAppSelector } from "../../hooks/redux-hooks";
 
+
 export const Words = () => {
     const dispatch = useAppDispatch();
     const data = useAppSelector((state) => state.userWords.words);
@@ -12,6 +13,7 @@ export const Words = () => {
                     <p>{obj.Word}</p>
                     <p>{obj.Translate}</p>
                     <p>{obj.Status}</p>
+                    <p>{obj.Priority}</p>
                 </li>
             ))}
         </ul>

@@ -1,14 +1,18 @@
 import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux-hooks";
-import { getUserColl } from "../../slices/userCollections";
+import { deleteUserColl, getUserColl, updateUserColl } from "../../slices/userCollections";
 import { Link } from "react-router-dom";
 import { getWordByCategory } from "../../slices/user-words";
+import './collection.scss';
+import { AddCollectionForm } from "./addCollectionForm";
 
 export const Collection = () => {
+    // For modal windows 
     const [editModalMap, setEditModalMap]: any = useState({});
     const [deleteModalMap, setDeleteModalMap]: any = useState({});
+    const [newName, setNewName] = useState('');
 
-
+    // For show collection 
     const dispatch = useAppDispatch();
     const userData = useAppSelector((state) => state.auth.basicUserInfo);
 
@@ -33,6 +37,7 @@ export const Collection = () => {
         }
     }
 
+    // For open/close modal windows 
     const editModalHandler = (objId: string) => {
         setEditModalMap((prevState: any) => ({
             ...prevState,
@@ -47,25 +52,85 @@ export const Collection = () => {
         }));
     }
 
+    const editHandler = (id: string, newName: string) => {
+        dispatch(updateUserColl({
+            id: id,
+            newName: newName
+        })).unwrap();
+
+        setNewName('');
+        editModalHandler(id);
+    }
+
+    const deleteHandler = (id: string) => {
+        dispatch(deleteUserColl(id)).unwrap();
+        deleteModalHandler(id);
+    }
+
     return (
-        <ul className="flex flex-wrap justify-between m-5">
-            {data?.map(obj => (
-                <li key={obj.Id} className="w-1/2 p-5 bg-gray-100 border border-gray-200 rounded-lg">
-                    <button className="bg-red-400" onClick={() => editModalHandler(obj.Id)}>
-                        edit
-                    </button>
-                    {editModalMap[obj.Id] ? <div>MODAL</div> : null}
+        <>
+            <AddCollectionForm />
+            <ul className="flex flex-wrap justify-between m-5">
+                {data?.map(obj => (
+                    <li key={obj.Id} className="w-1/2 p-5 bg-gray-100 border border-gray-200 rounded-lg">
+                        <Link to="/wordsByCategory">
+                            <button onClick={() => onCLickHandler(obj.Id)}>{obj.Name}</button>
+                        </Link>
 
-                    <button className="bg-red-500" onClick={() => deleteModalHandler(obj.Id)}>
-                        delete
-                    </button>
-                    {deleteModalMap[obj.Id] ? <div>DELETE</div> : null}
+                        <div className="columns-2">
+                            <div>
+                                <button className="bg-green-100" onClick={() => editModalHandler(obj.Id)}>
+                                    Edit
+                                </button>
+                                {editModalMap[obj.Id] ?
+                                    <>
+                                        <div className="modal" id="modal">
+                                            <h2>Edit collection Name</h2>
+                                            <input
+                                                className="content bg-gray-200 rounded"
+                                                type='text'
+                                                placeholder="New collection name"
+                                                onChange={(e) => setNewName(e.target.value)}
+                                            />
 
-                    <Link to="/wordsByCategory">
-                        <button onClick={() => onCLickHandler(obj.Id)}>{obj.Name}</button>
-                    </Link>
-                </li>
-            ))}
-        </ul>
+                                            <div className="actions">
+                                                <button className="toggle-button bg-green-100" onClick={() => editModalHandler(obj.Id)}>Close</button>
+                                            </div>
+                                            <div className="actions">
+                                                <button className="toggle-button bg-red-100" onClick={() => editHandler(obj.Id, newName)}>Change</button>
+                                            </div>
+                                        </div>
+                                    </>
+                                    : null}
+                            </div>
+
+                            <div>
+                                <button className="bg-red-100" onClick={() => deleteModalHandler(obj.Id)}>
+                                    Delete
+                                </button>
+                                {deleteModalMap[obj.Id] ?
+                                    <>
+                                        <div className="modal" id="modal">
+                                            <h2>Edit Modal Window</h2>
+                                            <div className="content">Modal windows for delete collection data</div>
+
+                                            <div className="actions">
+                                                <button className="toggle-button bg-green-100" onClick={() => deleteModalHandler(obj.Id)}>Close</button>
+                                            </div>
+                                            <div className="actions">
+                                                <button className="toggle-button bg-red-100" onClick={() => deleteHandler(obj.Id)}>Delete</button>
+                                            </div>
+                                        </div>
+                                    </>
+                                    : null}
+                            </div>
+
+                        </div>
+
+                    </li>
+                ))}
+            </ul>
+        </>
+
     );
 }

@@ -3,19 +3,23 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export default class CollectionWords {
-    static async createCollection(nameCollection: string, findToken: string) {
-        const userIDByToken = await prisma.tokenModels.findFirst({
-            where: { RefreshToken: findToken }
+    static async createCollection(userId: string, name: string) {
+        const userData = await prisma.users.findFirst({
+            where: { Id: userId }
         });
 
-        if (!userIDByToken) {
+        if (!userData) {
             return new Error('User not login');
+        }
+        const checkCollection = await prisma.userCollections.findFirst({ where: { Name: name } });
+        if (checkCollection) {
+            return new Error('Collection already exist');
         }
 
         const newColelction = await prisma.userCollections.create({
             data: {
-                Name: nameCollection,
-                UserId: userIDByToken.UserId
+                Name: name,
+                UserId: userData.Id
             }
         });
         return newColelction;

@@ -10,4 +10,4 @@ collectionWordsRouter.put('/update', checkAuth, CollectionWordsController.update
 
 collectionWordsRouter.get('/userCollections/:id', checkAuth, CollectionWordsController.getAllCollections);
 
-collectionWordsRouter.delete('/delete', checkAuth, CollectionWordsController.deleteCollection);
+collectionWordsRouter.delete('/delete/:id', checkAuth, CollectionWordsController.deleteCollection);

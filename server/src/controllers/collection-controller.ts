@@ -4,9 +4,8 @@ import CollectionWords from "../services/collection-service";
 export class CollectionWordsController {
     static async createCollection(req: Request, res: Response, next: NextFunction) {
         try {
-            const token = req.cookies.refreshToken;
-            const { name } = req.body;
-            const newCollection = await CollectionWords.createCollection(name, token);
+            const { userId, name } = req.body;
+            const newCollection = await CollectionWords.createCollection(userId, name);
             return res.json(newCollection);
         } catch (error) {
             next(error);
@@ -25,7 +24,7 @@ export class CollectionWordsController {
 
     static async getAllCollections(req: Request, res: Response, next: NextFunction) {
         try {
-            const userId  = req.params.id;
+            const userId = req.params.id;
             const allUserCollections = await CollectionWords.getAllCollections(userId);
             return res.json(allUserCollections);
         } catch (error) {
@@ -35,7 +34,7 @@ export class CollectionWordsController {
 
     static async deleteCollection(req: Request, res: Response, next: NextFunction) {
         try {
-            const { id } = req.body;
+            const id = req.params.id;
             const deleteCol = await CollectionWords.deleteCollection(id);
             return res.json(deleteCol)
         } catch (error) {
