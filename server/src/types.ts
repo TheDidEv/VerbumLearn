@@ -14,7 +14,20 @@ type WordType = {
     IntermediateWWordCollectionName: string;
 }
 
+type MainWord = {
+    Id: string,
+    Word: string,
+    Translate: string
+}
+
+type WrongWords = {
+    Word: string,
+    Translate: string
+
+}
 export {
     UserType,
     WordType,
+    MainWord,
+    WrongWords,
 }
