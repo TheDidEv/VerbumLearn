@@ -4,6 +4,7 @@ type UserModel = {
     Email: string;
     Activated: boolean;
     ActivationLink: string;
+    CreateAt: Date
 }
 
 export default class UserDto {
@@ -12,6 +13,7 @@ export default class UserDto {
     Email: string;
     ActivationLink: string;
     Activated: boolean;
+    CreateAt: Date;
 
     constructor(model: UserModel) {
         this.Id = model.Id;
@@ -19,5 +21,6 @@ export default class UserDto {
         this.Email = model.Email;
         this.ActivationLink = model.ActivationLink;
         this.Activated = model.Activated;
+        this.CreateAt = model.CreateAt
     }
 }

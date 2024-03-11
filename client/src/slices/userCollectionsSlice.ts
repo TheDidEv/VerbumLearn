@@ -1,5 +1,5 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { deleteUserCollection, getUserCollections, postUserCollection, updateUserCollection } from "../services/user-collections";
+import { deleteUserCollection, getUserCollections, postUserCollection, updateUserCollection } from "../services/user-collections-service";
 
 type CollectionType = {
     Id: string,

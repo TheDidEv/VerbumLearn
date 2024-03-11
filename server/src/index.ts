@@ -8,6 +8,7 @@ import { Words } from './words_db';
 import { collectionWordsRouter } from './routers/collection-router';
 import { wordRouter } from './routers/word-route';
 import { quizRouter } from './routers/quiz-router';
+import { dataAnalysus } from './routers/data-analysis-router';
 
 require("dotenv").config({ path: __dirname + './../.env' });
 
@@ -40,6 +41,7 @@ const main = async () => {
     app.use('/collectionWords', collectionWordsRouter);
     app.use('/words', wordRouter);
     app.use('/quiz', quizRouter);
+    app.use('/data', dataAnalysus);
 
     app.listen(PORT, () => {
         console.log(`Server was start on port: ${PORT}`)

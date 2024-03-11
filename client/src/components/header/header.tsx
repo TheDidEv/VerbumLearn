@@ -20,11 +20,11 @@ export const Header = () => {
                 <Link to='/'><Logo /></Link>
             </div>
             <div className="flex">
-                <Link to='/' className="mr-4 bg-gray-0 hover:bg-gray-100 focus:outline-none rounded">Home</Link>
-                <Link to='/Rules' className='bg-gray-0 hover:bg-gray-100 focus:outline-none rounded'>Rules</Link>
+                <Link to='/' className="mx-4 bg-gray-0 hover:bg-gray-200 focus:outline-none rounded">Home</Link>
+                <Link to='/Rules' className='bg-gray-0 hover:bg-gray-200 focus:outline-none rounded'>Rules</Link>
             </div>
             <div>
-                <Link to='/userPage'>{username}</Link>    
+                <Link to='/userPage' className='bg-gray-0 hover:bg-gray-200 focus:outline-none rounded'>{username}</Link>    
             </div>
             <Outlet />
         </div>

@@ -1,5 +1,5 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getAllServiceWords } from "../services/service-words";
+import { getAllServiceWords } from "../services/service-words-service";
 
 type Word = {
     Id: string,

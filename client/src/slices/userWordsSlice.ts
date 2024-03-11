@@ -1,5 +1,5 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getWordByCat } from "../services/user-words";
+import { getWordByCat } from "../services/user-words-service";
 
 enum statusWord {
     WRONG,
@@ -41,7 +41,7 @@ export const getWordByCategory = createAsyncThunk('getUserWordsByCategory', asyn
     return resData;
 });
 
-const userWords = createSlice({
+const userWordsSlice = createSlice({
     name: "userWords",
     initialState: initialState,
     reducers: {},
@@ -62,4 +62,4 @@ const userWords = createSlice({
     }
 });
 
-export default userWords.reducer;
+export default userWordsSlice.reducer;

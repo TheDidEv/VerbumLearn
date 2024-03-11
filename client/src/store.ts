@@ -1,15 +1,18 @@
 import { configureStore } from "@reduxjs/toolkit";
+
 import authSlice from "./slices/authSlice";
 import serviceWordsSlice from "./slices/serviceWordsSlice";
-import userCollectionSlice from "./slices/userCollections";
-import userWords from "./slices/user-words";
+import userCollectionSlice from "./slices/userCollectionsSlice";
+import userWordsSlice from "./slices/userWordsSlice";
+import dataSlice from "./slices/dataAnalysisSlice"
 
 const store = configureStore({
     reducer: {
         auth: authSlice,
         serviceWord: serviceWordsSlice,
         userCollection: userCollectionSlice,
-        userWords: userWords,
+        userWords: userWordsSlice,
+        userData: dataSlice,
     },
 });
 

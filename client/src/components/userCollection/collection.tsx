@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux-hooks";
-import { deleteUserColl, getUserColl, updateUserColl } from "../../slices/userCollections";
+import { deleteUserColl, getUserColl, updateUserColl } from "../../slices/userCollectionsSlice";
 import { Link } from "react-router-dom";
-import { getWordByCategory } from "../../slices/user-words";
+import { getWordByCategory } from "../../slices/userWordsSlice";
 import './collection.scss';
 import { AddCollectionForm } from "./addCollectionForm";
 
@@ -21,7 +21,7 @@ export const Collection = () => {
 
     useEffect(() => {
         async function getColl() {
-            dispatch(getUserColl(userId!)).unwrap();
+            await dispatch(getUserColl(userId!)).unwrap();
         }
         getColl();
     }, [dispatch])

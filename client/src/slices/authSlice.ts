@@ -15,6 +15,7 @@ type UserBasicInfo = {
     Id: string;
     Email: string;
     UserName: string;
+    CreateAt: string
 }
 
 type UserProfileData = {

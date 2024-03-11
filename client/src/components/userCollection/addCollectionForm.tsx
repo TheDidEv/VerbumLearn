@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux-hooks";
-import { postUserColl } from "../../slices/userCollections";
+import { postUserColl } from "../../slices/userCollectionsSlice";
 
 export const AddCollectionForm = () => {
     const [name, setName] = useState('');
