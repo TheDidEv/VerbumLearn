@@ -53,8 +53,8 @@ export class WordController {
 
     static getAllWords = async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const token = req.cookies.refreshToken;
-            const data = await WordService.getAllWords(token);
+            const id = req.params.id;
+            const data = await WordService.getAllWords(id);
             res.status(200).json(data);
         } catch (error) {
             next(error);

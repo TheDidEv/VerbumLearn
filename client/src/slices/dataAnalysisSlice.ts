@@ -7,12 +7,6 @@ type allDataType = {
     LERNED: number,
 }
 
-let allData: allDataType = {
-    WRONG: 0,
-    MID: 0,
-    LERNED: 0,
-};
-
 // FOr initial state
 type InitialType = {
     allData: allDataType | null;
@@ -21,7 +15,7 @@ type InitialType = {
 }
 
 const initialState: InitialType = {
-    allData: allData ? allData : null,
+    allData: null,
     status: "idle",
     error: null,
 }
@@ -30,7 +24,6 @@ export const allDataAnalysis = createAsyncThunk('allDataAnalysis', async (userId
     const response = await getAllData(userId);
     const resData = response.data;
 
-    allData = resData;
     return resData;
 });
 

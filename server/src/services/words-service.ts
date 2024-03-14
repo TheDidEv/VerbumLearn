@@ -176,14 +176,14 @@ export default class WordService {
         return updateWord;
     }
 
-    static getAllWords = async (token: string) => {
-        const userId = await prisma.tokenModels.findFirst({ where: { RefreshToken: token } });
+    static getAllWords = async (id: string) => {
+        const userId = await prisma.users.findFirst({ where: { Id: id } });
 
         if (!userId) {
             return new Error("User not find");
         }
 
-        const collectionAllId = await prisma.userCollections.findFirst({ where: { Name: "AllWords", UserId: userId.UserId } });
+        const collectionAllId = await prisma.userCollections.findFirst({ where: { Name: "AllWords", UserId: userId.Id } });
 
         const intermediateCollections = await prisma.intermediateWordsCollections.findMany({ where: { UserColletion: collectionAllId?.Id } });
 

@@ -7,8 +7,6 @@ type CollectionType = {
     UserId: string,
 }
 
-let userColl: CollectionType[] = [];
-
 // Initial default state
 type userCollectionApi = {
     userCollections?: CollectionType[] | null;
@@ -17,7 +15,7 @@ type userCollectionApi = {
 }
 
 const initialState: userCollectionApi = {
-    userCollections: userColl ? userColl : null,
+    userCollections: [],
     status: "idle",
     error: null
 }
@@ -25,7 +23,6 @@ const initialState: userCollectionApi = {
 export const getUserColl = createAsyncThunk('getAllUserCollections', async (userId: string) => {
     const response = await getUserCollections(userId);
     const resData = response.data;
-    userColl = [...resData];
 
     return resData;
 });
@@ -38,19 +35,12 @@ export const updateUserColl = createAsyncThunk('updateUserCollection', async (da
     const response = await updateUserCollection(data.id, data.newName);
     const resData = response.data;
 
-    userColl.forEach((elem) => {
-        if (elem.Id === resData.Name) {
-            elem.Name = data.newName;
-        }
-    });
     return resData;
 });
 
 export const postUserColl = createAsyncThunk('postUserCollection', async (data: updatePostType) => {
     const response = await postUserCollection(data.id, data.newName);
     const resData = response.data;
-
-    userColl.push(resData);
 
     return resData;
 });
@@ -87,7 +77,11 @@ const userCollectionSlice = createSlice({
             })
             .addCase(updateUserColl.fulfilled, (state: any, action: any) => {
                 state.status = "idle";
-                state.userCollections = action.payload;
+                const updatedCollection = action.payload;
+                const index = state.userCollections.findIndex((userCollection: CollectionType) => userCollection.Id === updatedCollection.Id);
+                if (index !== -1) {
+                    state.userCollections[index] = updatedCollection;
+                }
             })
             .addCase(updateUserColl.rejected, (state: any, action: any) => {
                 state.status = "failed";
@@ -100,7 +94,7 @@ const userCollectionSlice = createSlice({
             })
             .addCase(postUserColl.fulfilled, (state: any, action: any) => {
                 state.status = "idle";
-                state.userCollections = action.payload;
+                state.userCollections.push(action.payload);
             })
             .addCase(postUserColl.rejected, (state: any, action: any) => {
                 state.status = "failed";
@@ -113,7 +107,7 @@ const userCollectionSlice = createSlice({
             })
             .addCase(deleteUserColl.fulfilled, (state: any, action: any) => {
                 state.status = "idle";
-                state.userCollections = action.payload;
+                state.userCollections = state.userCollections.filter((obj: CollectionType) => obj.Id !== action.payload.Id);
             })
             .addCase(deleteUserColl.rejected, (state: any, action: any) => {
                 state.status = "failed";

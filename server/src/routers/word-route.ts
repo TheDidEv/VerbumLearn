@@ -12,7 +12,7 @@ wordRouter.post('/serviceWordToUserCat', WordController.serviceWordToUserCat)
 
 wordRouter.put('/editWord/:id', WordController.editWord);
 
-wordRouter.get('/getAllWords', WordController.getAllWords);
+wordRouter.get('/getAllWords/:id', WordController.getAllWords);
 
 wordRouter.get('/getWord/:id', checkAuth, WordController.getWord);
 

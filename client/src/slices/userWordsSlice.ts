@@ -17,8 +17,6 @@ type Word = {
     UpdateAt: Date
 }
 
-let word: Word[] = [];
-
 // For initial default state
 
 type userWordApi = {
@@ -28,7 +26,7 @@ type userWordApi = {
 }
 
 const initialState: userWordApi = {
-    words: word ? word : null,
+    words: [],
     status: "idle",
     error: null
 }
@@ -36,7 +34,6 @@ const initialState: userWordApi = {
 export const getWordByCategory = createAsyncThunk('getUserWordsByCategory', async (catId:string) => {
     const response = await getWordByCat(catId);
     const resData = response.data;
-    word = [...resData];
 
     return resData;
 });

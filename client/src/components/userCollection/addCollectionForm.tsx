@@ -18,7 +18,7 @@ export const AddCollectionForm = () => {
             newName: name,
         })).unwrap();
         setName('');
-        window.location.reload();
+        // window.location.reload();
     }
 
     return (

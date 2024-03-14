@@ -8,8 +8,6 @@ type Word = {
     UkrTranslate: string
 }
 
-let word: Word[] = []
-
 // For initial default state
 type serviceWordsApi = {
     words?: Word[] | null;
@@ -18,7 +16,7 @@ type serviceWordsApi = {
 }
 
 const initialState: serviceWordsApi = {
-    words: word ? word : null,
+    words: [],
     status: "idle",
     error: null
 }
@@ -26,7 +24,6 @@ const initialState: serviceWordsApi = {
 export const getAllWordServ = createAsyncThunk('getAllSerrviceWords', async () => {
     const response = await getAllServiceWords();
     const resData = response.data;
-    word = [...resData];
 
     return resData;
 });
