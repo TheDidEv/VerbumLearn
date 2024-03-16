@@ -10,7 +10,7 @@ export const Collection = () => {
     // For modal windows 
     const [editModalMap, setEditModalMap]: any = useState({});
     const [deleteModalMap, setDeleteModalMap]: any = useState({});
-    const [newName, setNewName] = useState('');
+    const [newName, setNewName] = useState('');// For edit
 
     // For show collection 
     const dispatch = useAppDispatch();
@@ -27,7 +27,6 @@ export const Collection = () => {
     }, [dispatch])
 
     const onCLickHandler = async (catId: string) => {
-        console.log(catId);
         try {
             if (catId) {
                 await dispatch(getWordByCategory(catId)).unwrap();
@@ -91,6 +90,7 @@ export const Collection = () => {
                                                 type='text'
                                                 placeholder="New collection name"
                                                 onChange={(e) => setNewName(e.target.value)}
+                                                value={newName}
                                             />
 
                                             <div className="actions">
@@ -111,7 +111,7 @@ export const Collection = () => {
                                 {deleteModalMap[obj.Id] ?
                                     <>
                                         <div className="modal" id="modal">
-                                            <h2>Edit Modal Window</h2>
+                                            <h2>Delete Modal Window</h2>
                                             <div className="content">Modal windows for delete collection data</div>
 
                                             <div className="actions">

@@ -4,8 +4,8 @@ import { WordType } from '../types';
 const prisma = new PrismaClient();
 
 export default class WordService {
-    static addWord = async (wordType: WordType, token: string) => {
-        const userId = await prisma.tokenModels.findFirst({ where: { RefreshToken: token } });
+    static addWord = async (wordType: WordType, id: string) => {
+        const userId = await prisma.users.findFirst({ where: { Id: id } });
         const allWord = 'AllWords'
 
         if (!userId) {
@@ -13,7 +13,7 @@ export default class WordService {
         }
         const userAllWordCollection = await prisma.userCollections.findFirst({
             where: {
-                UserId: userId.UserId,
+                UserId: userId.Id,
                 Name: allWord,
             }
         });
@@ -21,7 +21,7 @@ export default class WordService {
         if (wordType.IntermediateWWordCollectionName) {
             const userConcretCollection = await prisma.userCollections.findFirst({
                 where: {
-                    UserId: userId.UserId,
+                    UserId: userId.Id,
                     Name: wordType.IntermediateWWordCollectionName
                 }
             });

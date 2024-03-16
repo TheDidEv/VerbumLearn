@@ -65,31 +65,39 @@ export default class QuizService {
 
     static updateQuizData = async (wordId: string, answer: boolean) => {
         let word = await prisma.userWords.findFirst({ where: { Id: wordId } });
+        let checkStatus = 0
 
         if (!word) {
             return new Error("Not found word");
         }
 
+        if (word.Priority > 0) {
+            checkStatus = 1;
+        }
+        else {
+            checkStatus = 0;
+        }
+
         if (answer === false) {
-            const newStatus = updateStatus(word.Priority + 1);
+            const newStatus = updateStatus(word.Priority + checkStatus);
             word = await prisma.userWords.update({
                 where: {
                     Id: word.Id
                 },
                 data: {
-                    Priority: word.Priority + 1,
+                    Priority: word.Priority + checkStatus,
                     Status: newStatus,
                 }
             });
         }
         else if (answer === true) {
-            const newStatus = updateStatus(word.Priority - 1);
+            const newStatus = updateStatus(word.Priority - checkStatus);
             word = await prisma.userWords.update({
                 where: {
                     Id: word.Id
                 },
                 data: {
-                    Priority: word.Priority - 1,
+                    Priority: word.Priority - checkStatus,
                     Status: newStatus,
                 }
             });

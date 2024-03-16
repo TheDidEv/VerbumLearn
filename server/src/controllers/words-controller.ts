@@ -6,10 +6,10 @@ import { WordType } from "../types";
 export class WordController {
     static addWord = async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const token = req.cookies.refreshToken;
+            const { userId } = req.body;
             const data: WordType = req.body;
 
-            const createWord = await WordService.addWord(data, token);
+            const createWord = await WordService.addWord(data, userId);
 
             res.status(201).json(createWord);
         } catch (error) {

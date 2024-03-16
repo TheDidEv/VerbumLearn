@@ -77,8 +77,10 @@ const userCollectionSlice = createSlice({
             })
             .addCase(updateUserColl.fulfilled, (state: any, action: any) => {
                 state.status = "idle";
+
                 const updatedCollection = action.payload;
                 const index = state.userCollections.findIndex((userCollection: CollectionType) => userCollection.Id === updatedCollection.Id);
+                
                 if (index !== -1) {
                     state.userCollections[index] = updatedCollection;
                 }
