@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { useAppSelector } from "../../hooks/redux-hooks";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux-hooks";
 import { getQuiz, updateWord } from "../../services/quiz-service";
+import { getUserColl } from "../../slices/userCollectionsSlice";
 
 type quizType = {
     Id?: string;
@@ -9,6 +10,7 @@ type quizType = {
 }
 
 export const Quiz = () => {
+    const dispatch = useAppDispatch();
     const [collection, setCollection] = useState('AllWords');
     const [quizData, setQuizData] = useState<quizType[]>();
 
@@ -17,15 +19,19 @@ export const Quiz = () => {
 
     const [allTranslate, setAllTranslate] = useState<string[]>([]);
 
+    useEffect(() => {
+        async function getColl() {
+            await dispatch(getUserColl(userId!)).unwrap();
+        }
+        getColl();
+    }, [dispatch])
+
     const onChangeSelector = (event: any) => {
         setCollection(event.target.value)
     }
 
     const getQuizHandler = async (userId: string, CollName: string) => {
-        const response = await getQuiz({
-            userId: userId,
-            CollName: CollName
-        });
+        const response = await getQuiz(userId, CollName);
         setQuizData(response.data);
 
         if (response.data) {
@@ -43,8 +49,8 @@ export const Quiz = () => {
                 updateWord(id, isAnswer);
 
                 setAllTranslate([]);
-                setQuizData([]);
-                setCollection('AllWords')
+                setQuizData(undefined);
+                setCollection('AllWords');
             } else {
                 return null;
             }
@@ -57,7 +63,7 @@ export const Quiz = () => {
 
                 setAllTranslate([]);
                 setQuizData([]);
-                setCollection('AllWords')
+                setCollection('AllWords');
             } else {
                 return null;
             }
@@ -81,10 +87,10 @@ export const Quiz = () => {
                     </div>
 
                     <ul className="columns-2 w-80 justify-center mx-auto">
-                        {quizData.map(obj => (
-                            <li>
-                                <button key={obj.Id}
-                                    className="bg-gray-100 h-16 p-4 rounded-lg border border-gray-200 font-medium"
+                        {quizData.map((obj, index) => (
+                            <li key={index}>
+                                <button
+                                    className="bg-gray-100 h-16 w-32 p-4 rounded-lg border border-gray-200 font-medium"
                                     onClick={() => sendAnswer(obj.Translate)}
                                 >
                                     {obj.Translate}

@@ -7,8 +7,8 @@ type getQuizType = {
 
 const path = 'quiz';
 
-export const getQuiz = async (data: getQuizType) => {
-    return await axiosInstance.get(`${path}/getQuiz`, { data });
+export const getQuiz = async (userId: string, CollName: string) => {
+    return await axiosInstance.post(`${path}/getQuiz`, { userId, CollName });
 }
 
 export const updateWord = async (wordId: string, answer: boolean) => {

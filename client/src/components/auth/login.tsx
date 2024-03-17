@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useAppDispatch } from "../../hooks/redux-hooks";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux-hooks";
 import { login } from "../../slices/authSlice";
 import { Link } from "react-router-dom";
 
@@ -8,7 +8,10 @@ export const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
+    let userError: any = useAppSelector((state) => state.auth.error);
+
     const handlerSubmit = async () => {
+
         if (email && password) {
             try {
                 await dispatch(
@@ -24,6 +27,7 @@ export const Login = () => {
         }
         else {
             console.log("Error login");
+            userError = true;
         }
     }
 
@@ -55,6 +59,8 @@ export const Login = () => {
                     Login
                 </button>
                 <Link to='/register' className="m-3 bg-white rounded-lg border hover:border-gray-300  focus:outline-none">Register</Link>
+
+                {userError ? <div className="bg-red-200 rounded">Not valid user data</div> : null}
             </div>
         </div>
     );

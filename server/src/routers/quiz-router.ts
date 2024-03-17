@@ -3,6 +3,6 @@ import { QuizController } from "../controllers/quiz-controller";
 
 export const quizRouter = Router();
 
-quizRouter.get('/getQuiz', QuizController.getQuiz);
+quizRouter.post('/getQuiz', QuizController.getQuiz);
 
 quizRouter.put('/updateQuizData', QuizController.updateQuiz);
