@@ -17,12 +17,12 @@ import { Words } from './components/words/words';
 
 function App() {
   const getLocation = useLocation();
-  const loc = getLocation.pathname;
+  const location = getLocation.pathname;
 
   return (
     <div className="App min-h-screen bg-white"> {/*bg-gradient-to-r from-indigo-700 to-indigo-950 */}
 
-      {loc !== '/login' && loc !== '/register' ? <Header /> : null}
+      {location !== '/login' && location !== '/register' ? <Header /> : null}
 
       <Routes>
         <Route element={<DefaultLayout />}>
@@ -40,7 +40,6 @@ function App() {
           <Route path='/wordsByCategory' element={<Words />} />
           <Route path='*' element={<NotFound />} />
         </Route>
-
       </Routes>
 
       {/* <Footer /> */}

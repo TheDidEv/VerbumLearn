@@ -1,10 +1,5 @@
 import axiosInstance from "../api/axiosInstance";
 
-type getQuizType = {
-    userId: string;
-    CollName: string
-}
-
 const path = 'quiz';
 
 export const getQuiz = async (userId: string, CollName: string) => {
