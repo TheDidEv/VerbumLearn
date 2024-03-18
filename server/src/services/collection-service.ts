@@ -57,12 +57,20 @@ export default class CollectionWords {
     }
 
     static async deleteCollection(id: string) {
-        const collection = await prisma.userCollections.delete({
-            where: { Id: id },
-            include: {
-                IntermediateWWordCollection: true,
-            }
-        });
-        return collection;
+        const findColl = await prisma.userCollections.findFirst({ where: { Id: id } });
+        if (findColl?.Name !== "AllWords") {
+            await prisma.intermediateWordsCollections.deleteMany({
+                where: { UserColletion: id },
+            });
+
+            const collection = await prisma.userCollections.delete({
+                where: { Id: id },
+                include: {
+                    IntermediateWWordCollection: true,
+                }
+            });
+            return collection;
+        }
+        return findColl;
     }
 }

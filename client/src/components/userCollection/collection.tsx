@@ -78,6 +78,7 @@ export const Collection = () => {
 
                         <div className="columns-2">
                             <div>
+
                                 <button className="bg-green-100" onClick={() => editModalHandler(obj.Id)}>
                                     Edit
                                 </button>
@@ -105,9 +106,11 @@ export const Collection = () => {
                             </div>
 
                             <div>
-                                <button className="bg-red-100" onClick={() => deleteModalHandler(obj.Id)}>
-                                    Delete
-                                </button>
+                                {obj.Name !== "AllWords" ?
+                                    <button className="bg-red-100" onClick={() => deleteModalHandler(obj.Id)}>
+                                        Delete
+                                    </button>
+                                    : null}
                                 {deleteModalMap[obj.Id] ?
                                     <>
                                         <div className="modal" id="modal">

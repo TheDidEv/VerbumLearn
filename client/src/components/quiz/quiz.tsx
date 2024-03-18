@@ -32,9 +32,10 @@ export const Quiz = () => {
 
     const getQuizHandler = async (userId: string, CollName: string) => {
         const response = await getQuiz(userId, CollName);
-        setQuizData(response.data);
+
 
         if (response.data) {
+            setQuizData(response.data);
             const translations = response.data.map((item: quizType) => item.Translate);
             setAllTranslate(translations);
         }

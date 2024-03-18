@@ -37,12 +37,24 @@ export default class UserService {
             const tokens = await tokenService.generateToken({ ...userDto });
             tokenService.saveToken(userDto.Id, tokens.refreshToken);
 
-            await prisma.userCollections.create({
+            const allWordsColl = await prisma.userCollections.create({
                 data: {
                     Name: 'AllWords',
                     UserId: newUser.Id
                 }
             });
+            const firstWord = await prisma.userWords.create({
+                data: {
+                    Word: "Hello",
+                    Translate: "Привіт",
+                }
+            });
+            await prisma.intermediateWordsCollections.create({
+                data: {
+                    UserColletion: allWordsColl.Id,
+                    UserWord: firstWord.Id,
+                }
+            })
             return {
                 ...tokens,
                 user: userDto

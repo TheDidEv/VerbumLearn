@@ -86,7 +86,7 @@ export const Words = () => {
                         <p>Status: {obj.Status}</p>
                         <p>Priority: {obj.Priority}</p>
 
-                        <div className="columns-3">
+                        {obj.Word !== "Hello" ? <div className="columns-3">
                             {/* EDIT WORD */}
                             <div>
                                 <button className="bg-green-100" onClick={() => editModalHendler(obj.Id)}>Edit</button>
@@ -199,6 +199,7 @@ export const Words = () => {
                             </div>
 
                         </div>
+                            : null}
                     </li>
                 ))}
             </ul>

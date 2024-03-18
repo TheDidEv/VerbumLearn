@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { WordController } from "../controllers/words-controller";
 import { checkAuth } from "../middlewares/auth-middleware";
+import { checkActivated } from "../middlewares/activated-middleware";
 
 export const wordRouter = Router();
 

@@ -26,7 +26,6 @@ export const Login = () => {
             }
         }
         else {
-            console.log("Error login");
             userError = true;
         }
     }
