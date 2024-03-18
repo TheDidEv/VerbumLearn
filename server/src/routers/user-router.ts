@@ -1,10 +1,16 @@
 import { Router, Request } from "express";
 import { UserController } from "../controllers/user-controller";
 import { checkAuth } from "../middlewares/auth-middleware";
+import { body } from "express-validator";
 
 export const userRouter = Router();
 
-userRouter.post('/registration', UserController.registration);
+userRouter.post('/registration',
+    body('Email').isEmail(),
+    body('Password').isLength({ min: 4, max: 15 }),
+    body('UserName').isLength({ min: 2, max: 15 }),
+    UserController.registration
+);
 
 userRouter.post('/login', UserController.login);
 
