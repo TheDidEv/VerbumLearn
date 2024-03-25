@@ -18,6 +18,7 @@ export const Quiz = () => {
 
     const category = useAppSelector((state) => state.userCollection.userCollections);
     const userId = useAppSelector((state) => state.auth.basicUserInfo?.Id);
+    const userEmail = useAppSelector((state) => state.auth.basicUserInfo?.Email);
 
     const [allWords, setAllWords] = useState<string[]>([]);
 
@@ -51,7 +52,7 @@ export const Quiz = () => {
             isAnswer = true;
             const id: string | undefined = quizData && quizData.length > 0 ? quizData[0].Id : undefined;
             if (id !== undefined) {
-                updateWord(id, isAnswer);
+                updateWord(id, isAnswer, userEmail!);
 
                 // setQuizData(undefined);
                 setCollection('AllWords');
@@ -63,7 +64,7 @@ export const Quiz = () => {
             isAnswer = false;
             const id: string | undefined = quizData && quizData.length > 0 ? quizData[0].Id : undefined;
             if (id !== undefined) {
-                updateWord(id, isAnswer);
+                updateWord(id, isAnswer, userEmail!);
 
                 // setQuizData([]);
                 setCollection('AllWords');

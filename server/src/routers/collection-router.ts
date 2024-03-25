@@ -4,10 +4,10 @@ import { checkAuth } from "../middlewares/auth-middleware";
 
 export const collectionWordsRouter = Router();
 
-collectionWordsRouter.post('/create', checkAuth, CollectionWordsController.createCollection);
+collectionWordsRouter.post('/create',  CollectionWordsController.createCollection);
 
-collectionWordsRouter.put('/update', checkAuth, CollectionWordsController.updateCollection);
+collectionWordsRouter.put('/update',  CollectionWordsController.updateCollection);
 
-collectionWordsRouter.get('/userCollections/:id', checkAuth, CollectionWordsController.getAllCollections);
+collectionWordsRouter.get('/userCollections/:id',  CollectionWordsController.getAllCollections);
 
-collectionWordsRouter.delete('/delete/:id', checkAuth, CollectionWordsController.deleteCollection);
+collectionWordsRouter.delete('/delete/:id',  CollectionWordsController.deleteCollection);

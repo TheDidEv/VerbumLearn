@@ -40,4 +40,21 @@ export class DataAnalysisUser {
 
         return allWordsData;
     }
+
+    static getUpdateWordByDate = async (email: string, date: string) => {
+        const findDate = new Date(date);
+
+        const findLogs = await prisma.userLogs.findMany({
+            where: {
+                Email: email,
+                CreateAt: {
+                    gte: findDate,
+                    lt: new Date(findDate.getTime() + 24 * 60 * 60 * 1000)
+                }
+            },
+
+        });
+
+        return findLogs.length;
+    }
 }

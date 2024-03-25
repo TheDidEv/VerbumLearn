@@ -12,17 +12,25 @@ export const CreateUserWord = () => {
 
     const dispatch = useAppDispatch();
 
-    const onClickHandler = (Word: string, Translate: string, collection: string) => {
-        dispatch(createWord({
-            Id: userId!,
-            Word: Word,
-            Translate: Translate,
-            IntermediateWWordCollectionName: collection,
-        })).unwrap();
+    const [errorCreateArea, setErrorCreateArea] = useState(false);
 
-        setWord('');
-        setTranslate('');
-        setCollection('AllWords');
+    const onClickHandler = (Word: string, Translate: string, collection: string) => {
+        if (word.length <= 0 || translate.length <= 0) {
+            setErrorCreateArea(true);
+        }
+        else {
+            dispatch(createWord({
+                Id: userId!,
+                Word: Word,
+                Translate: Translate,
+                IntermediateWWordCollectionName: collection,
+            })).unwrap();
+
+            setWord('');
+            setTranslate('');
+            setCollection('AllWords');
+            setErrorCreateArea(false);
+        }
     }
 
     const onChangeSelector = (event: any) => {
@@ -55,6 +63,8 @@ export const CreateUserWord = () => {
             >
                 Add
             </button>
+
+            {errorCreateArea ? <div className="bg-red-100 rounded w-48 mx-auto my-1">Error: Areas word and translate will be not empty</div> : null}
         </div>
     )
 }

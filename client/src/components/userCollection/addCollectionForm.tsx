@@ -12,13 +12,22 @@ export const AddCollectionForm = () => {
 
     useEffect(() => { setName(name) }, [name]);
 
+    const [collError, setCollError] = useState(false)
+
     const addCollectionHandler = async () => {
-        await dispatch(postUserColl({
-            id: userId!,
-            newName: name,
-        })).unwrap();
-        setName('');
-        // window.location.reload();
+        if (name.length <= 0) {
+            setCollError(true);
+        }
+        else {
+
+            await dispatch(postUserColl({
+                id: userId!,
+                newName: name,
+            })).unwrap();
+            setName('');
+            setCollError(false);
+            // window.location.reload();
+        }
     }
 
     return (
@@ -29,7 +38,10 @@ export const AddCollectionForm = () => {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
             />
+
             <button className="bg-green-100 rounded-r w-12" onClick={() => addCollectionHandler()}>Add</button>
+
+            {collError ? <div className="bg-red-100 rounded w-36 mx-auto my-2">Error: Area will be not empty</div> : null}
         </>
     );
 }

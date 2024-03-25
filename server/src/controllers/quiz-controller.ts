@@ -16,8 +16,8 @@ export class QuizController {
 
     static async updateQuiz(req: Request, res: Response, next: NextFunction) {
         try {
-            const { wordId, answer } = req.body;
-            const response = await QuizService.updateQuizData(wordId, answer);
+            const { wordId, answer, email } = req.body;
+            const response = await QuizService.updateQuizData(wordId, answer, email);
 
             res.status(200).json(response);
         } catch (error) {

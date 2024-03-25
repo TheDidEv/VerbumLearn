@@ -63,7 +63,7 @@ export default class QuizService {
         return finalArr;
     }
 
-    static updateQuizData = async (wordId: string, answer: boolean) => {
+    static updateQuizData = async (wordId: string, answer: boolean, email: string) => {
         let word = await prisma.userWords.findFirst({ where: { Id: wordId } });
         let checkStatus = 0
 
@@ -102,6 +102,8 @@ export default class QuizService {
                 }
             });
         }
+
+        await prisma.userLogs.create({ data: { Email: email } });
 
         return word;
     }

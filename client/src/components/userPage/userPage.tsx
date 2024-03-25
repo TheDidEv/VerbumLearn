@@ -41,10 +41,10 @@ export const UserPage = () => {
             <div className="h-96 bg-gray-100">
                 <div>Data analysis:</div>
 
-                <div style={{ width: "400px" }}>
+                <div style={{ width: "500px" }}>
                     <p className="py-6">All data</p>
 
-                    <PieChart width={400} height={300}>
+                    <PieChart width={500} height={300}>
                         <Pie data={PieChartsData}
                             cx="50%"
                             cy="50%"

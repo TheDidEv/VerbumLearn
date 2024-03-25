@@ -11,6 +11,7 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+  // directUrl = env("DIRECT_URL")
 }
 
 model Users {
@@ -72,6 +73,12 @@ model UserWords {
   UpdateAt  DateTime   @default(now())
 
   IntermediateWWordCollection IntermediateWordsCollections[]
+}
+
+model UserLogs {
+  Id       String   @id @default(uuid())
+  Email    String
+  CreateAt DateTime @default(now())
 }
 
 enum statusWord {
