@@ -14,16 +14,16 @@ require("dotenv").config({ path: __dirname + './../.env' });
 
 const main = async () => {
     const prisma = new PrismaClient();
-    // await prisma.words.deleteMany();
-    // for (const elem of Words) {
-    //     await prisma.words.create({
-    //         data: {
-    //             Word: elem.Word,
-    //             UkrTranslate: elem.UkrTranslate,
-    //             CollectionName: elem.CollectionName
-    //         }
-    //     });
-    // }
+    await prisma.words.deleteMany();
+    for (const elem of Words) {
+        await prisma.words.create({
+            data: {
+                Word: elem.Word,
+                UkrTranslate: elem.UkrTranslate,
+                CollectionName: elem.CollectionName
+            }
+        });
+    }
 
     const PORT = process.env.PORT;
     const app = express();

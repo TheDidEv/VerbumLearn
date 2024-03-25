@@ -23,8 +23,8 @@ export const ServiceWords = () => {
         setId();
     }, [dispatch, userId])
 
-    const onClickHandler = (wordId: string, userId: string) => {
-        serviceWordToUSerCollection(wordId, userId);
+    const onClickHandler = (word: string, userId: string) => {
+        serviceWordToUSerCollection(word, userId);
     }
 
     return (
@@ -37,7 +37,7 @@ export const ServiceWords = () => {
                     <div className="bg-red-100 rounded-lg">{obj.CollectionName}</div>
                     <button
                         className="my-2 w-20 bg-gray-200 hover:bg-white focus:outline-none rounded-lg"
-                        onClick={() => onClickHandler(obj.Id, userId)}
+                        onClick={() => onClickHandler(obj.UkrTranslate, userId)}
                     >
                         Button
                     </button>

@@ -30,8 +30,8 @@ export class WordController {
 
     static serviceWordToUserCat = async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const { wordId, userId } = req.body;
-            const data = WordService.serviceWordToUserCategory(wordId, userId)
+            const { word, userId } = req.body;
+            const data = WordService.serviceWordToUserCategory(word, userId)
 
             res.status(201).json(data);
         } catch (error) {

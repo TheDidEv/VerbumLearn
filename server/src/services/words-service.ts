@@ -79,8 +79,8 @@ export default class WordService {
         return addCat;
     }
 
-    static serviceWordToUserCategory = async (wordId: string, uId: string) => {
-        const serviceWord = await prisma.words.findFirst({ where: { Id: wordId } });
+    static serviceWordToUserCategory = async (word: string, uId: string) => {
+        const serviceWord = await prisma.words.findFirst({ where: { UkrTranslate: word } });
         const userId = await prisma.users.findFirst({ where: { Id: uId } });
         const allWord = 'AllWords'
 
