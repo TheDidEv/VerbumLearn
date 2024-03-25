@@ -1,6 +1,8 @@
 import axios from "axios";
 
-export const BASE_URL = 'http://localhost:5000';
+// require("dotenv").config({ path: __dirname + './../../.env' });
+
+export const BASE_URL = 'https://verbumlearnserv.onrender.com'; //http://localhost:5000
 
 const axiosInstance = axios.create({
     baseURL: BASE_URL,
