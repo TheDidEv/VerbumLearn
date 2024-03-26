@@ -38,7 +38,7 @@ const main = async () => {
         preflightContinue: false,
         optionsSuccessStatus: 204
     }
-    app.use(cors());
+    app.use(cors({ origin: "*", credentials: true }));
     app.use(cookieParser());
     app.use(express.json());
 
