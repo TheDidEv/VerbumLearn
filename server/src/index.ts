@@ -44,7 +44,7 @@ const main = async () => {
         res.header("Access-Control-Allow-Origin: *");
         res.header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, HEAD, OPTIONS");
         res.header("Access-Control-Allow-Headers: Content-Type, Origin, X-Requested-With, Accept, Authorization");
-        res.header("Conte -Type: application/json");
+        res.header("Conte-Type: application/json");
         next();
     })
 
