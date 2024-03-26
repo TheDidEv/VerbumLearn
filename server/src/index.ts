@@ -31,7 +31,7 @@ const main = async () => {
     const app = express();
 
     const corsOptions = {
-        origin: '*',
+        origin: 'https://verbumlearn.onrender.com',
         credentials: true,            //access-control-allow-credentials:true
         methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
         allowedHeaders: "Content-Type, Authorization, Origin, X-Requested-With, Accept",
