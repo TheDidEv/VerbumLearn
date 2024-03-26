@@ -10,6 +10,8 @@ import { wordRouter } from './routers/word-route';
 import { quizRouter } from './routers/quiz-router';
 import { dataAnalysus } from './routers/data-analysis-router';
 
+import { Request, Response, NextFunction } from 'express';
+
 require("dotenv").config({ path: __dirname + './../.env' });
 
 const main = async () => {
@@ -29,7 +31,7 @@ const main = async () => {
     const app = express();
 
     const corsOptions = {
-        origin: 'https://verbumlearn.onrender.com/',
+        origin: '*',
         credentials: true,            //access-control-allow-credentials:true
         optionSuccessStatus: 200,
         methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
@@ -39,6 +41,17 @@ const main = async () => {
     app.use(cors(corsOptions));
     app.use(cookieParser())
     app.use(express.json())
+    app.use(function (req: Request, res: Response, next: NextFunction) {
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header(
+            "Access-Control-Allow-Methods",
+            "GET,HEAD,OPTIONS,POST,PUT,DELETE"
+        );
+        res.header(
+            "Access-Control-Allow-Headers",
+            "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+        );
+    });
 
     app.use('/user', userRouter);
     app.use('/collectionWords', collectionWordsRouter);
