@@ -31,7 +31,10 @@ const main = async () => {
     const corsOptions = {
         origin: 'https://verbumlearn.onrender.com/',
         credentials: true,            //access-control-allow-credentials:true
-        optionSuccessStatus: 200
+        optionSuccessStatus: 200,
+        methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+        preflightContinue: false,
+        optionsSuccessStatus: 204
     }
     app.use(cors(corsOptions));
     app.use(cookieParser())
