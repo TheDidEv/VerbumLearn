@@ -29,7 +29,7 @@ const main = async () => {
     const app = express();
 
     const corsOptions = {
-        origin: process.env.CLIENT_URL,
+        origin: 'https://verbumlearn.onrender.com/',
         credentials: true,            //access-control-allow-credentials:true
         optionSuccessStatus: 200
     }
