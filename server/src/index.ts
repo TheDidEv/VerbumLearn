@@ -30,15 +30,23 @@ const main = async () => {
     const PORT = process.env.PORT;
     const app = express();
 
-    const corsOptions = {
-        origin: '*',
-        credentials: true,            //access-control-allow-credentials:true
-        optionSuccessStatus: 200,
-        methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-        preflightContinue: false,
-        optionsSuccessStatus: 204
-    }
-    app.use(cors({ origin: "*", credentials: true }));
+    // const corsOptions = {
+    //     origin: '*',
+    //     credentials: true,            //access-control-allow-credentials:true
+    //     optionSuccessStatus: 200,
+    //     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    //     preflightContinue: false,
+    //     optionsSuccessStatus: 204
+    // }
+    // app.use(cors({ origin: "*", credentials: true }));
+
+    app.use((req: Request, res: Response, next: NextFunction) => {
+        res.header("Access-Control-Allow-Origin: *");
+        res.header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, HEAD, OPTIONS");
+        res.header("Access-Control-Allow-Headers: Content-Type, Origin, X-Requested-With, Accept, Authorization");
+        next();
+    })
+
     app.use(cookieParser());
     app.use(express.json());
 
