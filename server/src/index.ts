@@ -30,23 +30,24 @@ const main = async () => {
     const PORT = process.env.PORT;
     const app = express();
 
-    // const corsOptions = {
-    //     origin: '*',
-    //     credentials: true,            //access-control-allow-credentials:true
-    //     optionSuccessStatus: 200,
-    //     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-    //     preflightContinue: false,
-    //     optionsSuccessStatus: 204
-    // }
-    // app.use(cors({ origin: "*", credentials: true }));
+    const corsOptions = {
+        origin: '*',
+        credentials: true,            //access-control-allow-credentials:true
+        methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+        allowedHeaders: "Content-Type, Authorization, Origin, X-Requested-With, Accept",
+        exposedHeaders: "Content-Range,X-Content-Range",
+        preflightContinue: false,
+        optionSuccessStatus: 200,
+    }
+    app.use(cors(corsOptions));
 
-    app.use((req: Request, res: Response, next: NextFunction) => {
-        res.header("Access-Control-Allow-Origin: *");
-        res.header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, HEAD, OPTIONS");
-        res.header("Access-Control-Allow-Headers: Content-Type, Origin, X-Requested-With, Accept, Authorization");
-        res.header("Conte-Type: application/json, text/plain");
-        next();
-    })
+    // app.use((req: Request, res: Response, next: NextFunction) => {
+    //     res.header("Access-Control-Allow-Origin: *");
+    //     res.header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, HEAD, OPTIONS");
+    //     res.header("Access-Control-Allow-Headers: Content-Type, Origin, X-Requested-With, Accept, Authorization");
+    //     res.header("Conte-Type: application/json, text/plain");
+    //     next();
+    // })
 
     app.use(cookieParser());
     app.use(express.json());
