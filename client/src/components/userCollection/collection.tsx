@@ -79,9 +79,12 @@ export const Collection = () => {
                         <div className="columns-2">
                             <div>
 
-                                <button className="bg-green-100" onClick={() => editModalHandler(obj.Id)}>
-                                    Edit
-                                </button>
+
+                                {obj.Name !== "AllWords" ?
+                                    <button className="bg-green-100" onClick={() => editModalHandler(obj.Id)}>
+                                        Edit
+                                    </button>
+                                    : null}
                                 {editModalMap[obj.Id] ?
                                     <>
                                         <div className="modal" id="modal">

@@ -15,7 +15,7 @@ export const AddCollectionForm = () => {
     const [collError, setCollError] = useState(false)
 
     const addCollectionHandler = async () => {
-        if (name.length <= 0) {
+        if (name.length <= 0 || name.length >= 35) {
             setCollError(true);
         }
         else {
@@ -41,7 +41,7 @@ export const AddCollectionForm = () => {
 
             <button className="bg-green-100 rounded-r w-12" onClick={() => addCollectionHandler()}>Add</button>
 
-            {collError ? <div className="bg-red-100 rounded w-36 mx-auto my-2">Error: Area will be not empty</div> : null}
+            {collError ? <div className="bg-red-100 rounded w-36 mx-auto my-2">Error: Area will be not empty or will be less than 35 symbols</div> : null}
         </>
     );
 }

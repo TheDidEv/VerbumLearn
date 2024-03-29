@@ -15,7 +15,7 @@ export const CreateUserWord = () => {
     const [errorCreateArea, setErrorCreateArea] = useState(false);
 
     const onClickHandler = (Word: string, Translate: string, collection: string) => {
-        if (word.length <= 0 || translate.length <= 0) {
+        if ((word.length <= 0 || translate.length <= 0) || (word.length >= 35 || translate.length >= 35)) {
             setErrorCreateArea(true);
         }
         else {
@@ -64,7 +64,7 @@ export const CreateUserWord = () => {
                 Add
             </button>
 
-            {errorCreateArea ? <div className="bg-red-100 rounded w-48 mx-auto my-1">Error: Areas word and translate will be not empty</div> : null}
+            {errorCreateArea ? <div className="bg-red-100 rounded w-48 mx-auto my-1">Error: Areas word and translate will be not empty or will be less than 35 symbols</div> : null}
         </div>
     )
 }

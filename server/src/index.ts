@@ -10,8 +10,6 @@ import { wordRouter } from './routers/word-route';
 import { quizRouter } from './routers/quiz-router';
 import { dataAnalysus } from './routers/data-analysis-router';
 
-import { Request, Response, NextFunction } from 'express';
-
 require("dotenv").config({ path: __dirname + './../.env' });
 
 const main = async () => {
