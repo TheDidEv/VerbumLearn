@@ -11,9 +11,16 @@ export default class CollectionWords {
         if (!userData) {
             return new Error('User not login');
         }
-        const checkCollection = await prisma.userCollections.findFirst({ where: { Name: name } });
-        if (checkCollection) {
-            return new Error('Collection already exist');
+
+        const existingCollection = await prisma.userCollections.findFirst({
+            where: {
+                UserId: userData.Id,
+                Name: name
+            }
+        });
+
+        if (existingCollection) {
+            return new Error('Collection already exists');
         }
 
         const newColelction = await prisma.userCollections.create({

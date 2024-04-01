@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 export default class WordService {
     static addWord = async (wordType: WordType, id: string) => {
         const userId = await prisma.users.findFirst({ where: { Id: id } });
-        const allWord = 'AllWords'
+        const allWordCollectionName = 'AllWords';
 
         if (!userId) {
             return new Error("User id not found");
@@ -14,9 +14,32 @@ export default class WordService {
         const userAllWordCollection = await prisma.userCollections.findFirst({
             where: {
                 UserId: userId.Id,
-                Name: allWord,
+                Name: allWordCollectionName,
             }
         });
+
+        if (!userAllWordCollection) {
+            return new Error("User's AllWords collection not found");
+        }
+
+        const allWordsIntemediate = await prisma.intermediateWordsCollections.findFirst({
+            where: { UserColletion: userAllWordCollection.Id }
+        });
+
+        const checkCreatedWord = await prisma.userWords.findFirst({
+            where: {
+                Word: wordType.Word,
+                IntermediateWWordCollection: {
+                    some: {
+                        Id: allWordsIntemediate!.Id
+                    }
+                }
+            }
+        });
+
+        if (checkCreatedWord) {
+            return new Error("Word already exists in AllWords collection");
+        }
 
         if (wordType.IntermediateWWordCollectionName) {
             const userConcretCollection = await prisma.userCollections.findFirst({

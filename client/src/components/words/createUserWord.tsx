@@ -9,13 +9,18 @@ export const CreateUserWord = () => {
 
     const userId = useAppSelector((state) => state.auth.basicUserInfo?.Id);
     const category = useAppSelector((state) => state.userCollection.userCollections);
+    const words = useAppSelector((state) => state.userWords.words)
 
     const dispatch = useAppDispatch();
 
     const [errorCreateArea, setErrorCreateArea] = useState(false);
 
     const onClickHandler = (Word: string, Translate: string, collection: string) => {
+        const isWordExist = words!.some(elem => elem.Word === word);
         if ((word.length <= 0 || translate.length <= 0) || (word.length >= 35 || translate.length >= 35)) {
+            setErrorCreateArea(true);
+        }
+        else if (isWordExist) {
             setErrorCreateArea(true);
         }
         else {
@@ -64,7 +69,7 @@ export const CreateUserWord = () => {
                 Add
             </button>
 
-            {errorCreateArea ? <div className="bg-red-100 rounded w-48 mx-auto my-1">Error: Areas word and translate will be not empty or will be less than 35 symbols</div> : null}
+            {errorCreateArea ? <div className="bg-red-100 rounded w-48 mx-auto my-1">Error: Areas word and translate will be not empty or will be less than 35 symbols or same name already created</div> : null}
         </div>
     )
 }

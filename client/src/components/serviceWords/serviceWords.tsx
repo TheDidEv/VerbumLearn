@@ -3,7 +3,6 @@ import { useAppDispatch, useAppSelector } from "../../hooks/redux-hooks"
 import { getAllWordServ } from "../../slices/serviceWordsSlice";
 import { serviceWordToUSerCollection } from "../../services/service-words-service";
 
-// TODO: finish func - add service word to user collection
 export const ServiceWords = () => {
     const dispatch = useAppDispatch();
     const data = useAppSelector((state) => state.serviceWord.words);

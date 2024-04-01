@@ -39,14 +39,6 @@ const main = async () => {
     }
     app.use(cors(corsOptions));
 
-    // app.use((req: Request, res: Response, next: NextFunction) => {
-    //     res.header("Access-Control-Allow-Origin: *");
-    //     res.header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, HEAD, OPTIONS");
-    //     res.header("Access-Control-Allow-Headers: Content-Type, Origin, X-Requested-With, Accept, Authorization");
-    //     res.header("Conte-Type: application/json, text/plain");
-    //     next();
-    // })
-
     app.use(cookieParser());
     app.use(express.json());
 
