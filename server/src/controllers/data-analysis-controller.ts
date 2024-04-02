@@ -23,4 +23,15 @@ export class DataAnalysisController {
             next(error);
         }
     }
+    
+    static wordByTwoDate = async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const { email, dateFrom, dateTo } = req.body;
+            const response = await DataAnalysisUser.getUpdateWordTwoByDate(email, dateFrom, dateTo);
+
+            res.status(200).json(response);
+        } catch (error) {
+            next(error);
+        }
+    }
 }

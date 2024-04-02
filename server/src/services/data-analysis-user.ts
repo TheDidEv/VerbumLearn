@@ -57,4 +57,22 @@ export class DataAnalysisUser {
 
         return findLogs.length;
     }
+
+    static getUpdateWordTwoByDate = async (email: string, dateFrom: string, dateTo: string) => {
+        const fromData = new Date(dateFrom);
+        const toDate = new Date(dateTo);
+
+        const findLogs = await prisma.userLogs.findMany({
+            where: {
+                Email: email,
+                CreateAt: {
+                    gte: fromData,
+                    lt: toDate
+                }
+            },
+
+        });
+
+        return findLogs.length;
+    }
 }
