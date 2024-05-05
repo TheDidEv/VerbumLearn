@@ -7,4 +7,4 @@ dataAnalysus.get('/allData/:id', DataAnalysisController.allData);
 
 dataAnalysus.get('/wordsAnalysisByDate', DataAnalysisController.wordByDate);
 
-dataAnalysus.get('/wordsAnalysisByTwoDate', DataAnalysisController.wordByTwoDate);
+dataAnalysus.post('/wordsAnalysisByTwoDate', DataAnalysisController.wordByTwoDate);

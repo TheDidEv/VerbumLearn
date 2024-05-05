@@ -28,8 +28,9 @@ const main = async () => {
     const PORT = process.env.PORT;
     const app = express();
 
+    // origin: 'https://verbumlearn.onrender.com',
     const corsOptions = {
-        origin: 'https://verbumlearn.onrender.com',
+        origin: 'http://localhost:3000',
         credentials: true,            //access-control-allow-credentials:true
         methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
         allowedHeaders: "Content-Type, Authorization, Origin, X-Requested-With, Accept",

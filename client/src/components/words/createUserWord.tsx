@@ -14,16 +14,17 @@ export const CreateUserWord = () => {
     const dispatch = useAppDispatch();
 
     const [errorCreateArea, setErrorCreateArea] = useState(false);
+    const [errorLanguage, setErrorLanguage] = useState(false);
 
     const onClickHandler = (Word: string, Translate: string, collection: string) => {
         const isWordExist = words!.some(elem => elem.Word === word);
         if ((word.length <= 0 || translate.length <= 0) || (word.length >= 35 || translate.length >= 35)) {
             setErrorCreateArea(true);
-        }
-        else if (isWordExist) {
+        } else if (isWordExist) {
             setErrorCreateArea(true);
-        }
-        else {
+        } else if (errorLanguage) {
+            setErrorCreateArea(true);
+        } else {
             dispatch(createWord({
                 Id: userId!,
                 Word: Word,
@@ -35,11 +36,32 @@ export const CreateUserWord = () => {
             setTranslate('');
             setCollection('AllWords');
             setErrorCreateArea(false);
+            setErrorLanguage(false);
         }
     }
 
     const onChangeSelector = (event: any) => {
         setCollection(event.target.value)
+    }
+
+    const handleWordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value;
+        if (/^[a-zA-Z]*$/.test(value) || value === '') {
+            setWord(value);
+            setErrorLanguage(false);
+        } else {
+            setErrorLanguage(true);
+        }
+    }
+
+    const handleTranslateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value;
+        if (/^[а-яА-ЯіІїЇєЄґҐ']*$/u.test(value) || value === '') {
+            setTranslate(value);
+            setErrorLanguage(false);
+        } else {
+            setErrorLanguage(true);
+        }
     }
 
     return (
@@ -48,13 +70,13 @@ export const CreateUserWord = () => {
                 placeholder="Word"
                 className="bg-gray-200 m-1 rounded-l"
                 value={word}
-                onChange={(e) => setWord(e.target.value)}
+                onChange={handleWordChange}
             />
             <input
                 placeholder="Translate"
                 className="bg-gray-200 m-1"
                 value={translate}
-                onChange={(e) => setTranslate(e.target.value)}
+                onChange={handleTranslateChange}
             />
             <select className="bg-gray-200 m-1 rounded-r" value={collection} onChange={onChangeSelector}>
                 {category?.map(obj => (
@@ -69,7 +91,8 @@ export const CreateUserWord = () => {
                 Add
             </button>
 
-            {errorCreateArea ? <div className="bg-red-100 rounded w-48 mx-auto my-1">Error: Areas word and translate will be not empty or will be less than 35 symbols or same name already created</div> : null}
+            {errorCreateArea ? <div className="bg-red-100 rounded w-48 mx-auto my-1">Error: Areas word and translate will be not empty or will be less than 35 symbols or same name already created or incorrect language</div> : null}
+            {errorLanguage ? <div className="bg-red-100 rounded w-48 mx-auto my-1">Error: Word should be in English and Translate should be in Ukrainian</div> : null}
         </div>
     )
 }

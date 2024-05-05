@@ -77,12 +77,12 @@ export const Quiz = () => {
     return (
         <div>
             <div className="p-5">
-                <select className="bg-gray-200 m-1 rounded-r" value={collection} onChange={onChangeSelector}>
+                <select className="bg-gray-200 m-1 rounded-l" value={collection} onChange={onChangeSelector}>
                     {category?.map(obj => (
                         <option key={obj.Id} value={obj.Name}>{obj.Name}</option>
                     ))}
                 </select>
-                <button className="bg-green-100 rounded" onClick={() => getQuizHandler(userId!, collection)}>Get quiz</button>
+                <button className="bg-green-100 rounded-r" onClick={() => getQuizHandler(userId!, collection)}>Get quiz</button>
             </div>
             {(quizData && !showAnswer) ?
                 <div>

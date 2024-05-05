@@ -38,7 +38,7 @@ export const ServiceWords = () => {
                         className="my-2 w-20 bg-gray-200 hover:bg-white focus:outline-none rounded-lg"
                         onClick={() => onClickHandler(obj.UkrTranslate, userId)}
                     >
-                        Button
+                        Add
                     </button>
 
                 </li>

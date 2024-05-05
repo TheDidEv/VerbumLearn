@@ -20,7 +20,7 @@ function App() {
   const location = getLocation.pathname;
 
   return (
-    <div className="App min-h-screen bg-white"> {/*bg-gradient-to-r from-indigo-700 to-indigo-950 */}
+    <div className="App gradient-background" > {/*bg-gradient-to-r from-indigo-700 to-indigo-950 */}
 
       {location !== '/login' && location !== '/register' ? <Header /> : null}
 
