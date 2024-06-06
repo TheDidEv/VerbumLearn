@@ -52,7 +52,6 @@ export const UserPage = () => {
                 setFlagStat(true);
             }
         }
-
     }
 
     return (
@@ -64,12 +63,12 @@ export const UserPage = () => {
             </div>
 
             <div className="h-auto bg-gray-100 rounded-lg">
-                <div>Data analysis:</div>
+                <div className="font-bold text-lg">Data analysis:</div>
 
                 <div className="flex">
 
                     <div style={{ width: "500px" }} >
-                        <p className="py-6">All data</p>
+                        <p className="py-6 font-bold text-lg">All data</p>
 
                         <PieChart width={500} height={300}>
                             <Pie data={PieChartsData}
@@ -134,7 +133,7 @@ export const UserPage = () => {
                         </div>
 
                         <button
-                            className="bg-gray-200 rounded-lg p-2 my-4"
+                            className="bg-gray-200 rounded-lg p-2 my-4 hover:bg-gray-300"
                             onClick={() => getStatisticByDate(first, second)}
                         >
                             Get statistic
@@ -152,19 +151,19 @@ export const UserPage = () => {
 
                             <p className="my-28 mx-10">
                                 {dataByDate === 0 && dataByDate != null ?
-                                    "We are very sad that you did not learn the words in the given time period: "
+                                    "We are very sad :( that you did not learn the words in the given time period: "
                                     : "You are cool, you learned the words in the given time period: "}
                                 {dataByDate}
                             </p>
 
-                            : null}
+                            : <p className="my-28 mx-10">Here will be displayed data about your progress for the specified time period</p>}
                     </div>
                 </div>
 
             </div>
 
             <button
-                className="bg-gray-200 rounded-lg p-2 my-4"
+                className="bg-gray-200 rounded-lg p-2 my-4 hover:bg-gray-300 font-bold"
                 onClick={() => handlerLogout()}
             >
                 Logout

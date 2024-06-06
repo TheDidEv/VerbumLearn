@@ -42,7 +42,7 @@ export const AddCollectionForm = () => {
                 onChange={(e) => setName(e.target.value)}
             />
 
-            <button className="bg-green-100 rounded-r w-12" onClick={() => addCollectionHandler()}>Add</button>
+            <button className="bg-green-100 rounded-r w-12 hover:bg-green-200" onClick={() => addCollectionHandler()}>Add</button>
 
             {collError ? <div className="bg-red-100 rounded w-40 mx-auto my-2">Error: Area will be not empty or will be less than 35 symbols or collection with same name already created</div> : null}
         </>

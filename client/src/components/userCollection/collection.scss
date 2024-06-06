@@ -1,38 +1,55 @@
 .modal {
-    position: absolute;
-    width: 500px;
-    background: white;
-    border: 1px solid #ccc;
-    border-radius: 1rem;
-    box-shadow: -2rem 2rem 2rem rgba(black, 0.2);
+  position: absolute;
+  width: 90%;
+  max-width: 500px;  // Ensure the modal doesn't exceed 500px
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 1rem;
+  box-shadow: -2rem 2rem 2rem rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-20px);
+  transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+  overflow: hidden;  // Prevent content overflow
+
+  &.on {
     opacity: 1;
     visibility: visible;
-  
-    &.off {
-      opacity: 0;
-      visibility: hidden;
-      box-shadow: 1rem 0 0 rgba(black, 0.2);
-    }offset-path: none;
-    
-    h2 {
-      border-bottom: 1px solid #ccc;
-      padding: 1rem;
-      margin: 0;
-    }
-    .content {
-      padding: 1rem;
-      margin: 1rem;
-    }
-    .actions {
+    transform: translateY(0);
+  }
+
+  h2 {
+    border-bottom: 1px solid #ccc;
+    padding: 1rem;
+    margin: 0;
+  }
+
+  .content {
+    padding: 1rem;
+    margin: 1rem;
+  }
+
+  .actions {
+    padding: 0.5rem 1rem;
+
+    button {
+      width: 30%;
+      border: 0;
+      border-radius: 5px;
       padding: 0.5rem 1rem;
-      button {
-        width: 30%;
-        border: 0;
-        border-radius: 5px;
-        padding: 0.5rem 1rem;
-        font-size: 0.8rem;
-        line-height: 1;
-      }
+      font-size: 0.8rem;
+      line-height: 1;
     }
   }
-  
+}
+
+body {
+  overflow-x: hidden;  // Prevent horizontal scroll on the body
+}
+
+.container {
+  margin: 0 auto;  // Center the container
+  padding: 1rem;  // Add some padding to avoid touching the screen edges
+  max-width: 100%;  // Ensure it doesn't exceed viewport width
+  overflow-x: hidden;  // Prevent horizontal overflow within the container
+}

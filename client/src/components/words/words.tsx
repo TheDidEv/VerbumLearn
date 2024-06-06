@@ -12,9 +12,9 @@ export const Words = () => {
     const [collection, setCollection] = useState('AllWords');
     const category = useAppSelector((state) => state.userCollection.userCollections);
 
-    const [editModalMap, setEditModalMap]: any = useState({});
-    const [addCatModalMap, setAddCatModalMap]: any = useState({});
-    const [deleteModalMap, setDeleteModalMap]: any = useState({});
+    const [editModalMap, setEditModalMap] = useState<Record<string, boolean>>({});
+    const [addCatModalMap, setAddCatModalMap] = useState<Record<string, boolean>>({});
+    const [deleteModalMap, setDeleteModalMap] = useState<Record<string, boolean>>({});
 
     const [newName, setNewName] = useState('');
     const [newTranslate, setNewTranslate] = useState('');
@@ -23,7 +23,6 @@ export const Words = () => {
 
     }, [dispatch]);
 
-    // Handler for modal windows
     const editModalHendler = (objId: string) => {
         setEditModalMap((prevState: any) => ({
             ...prevState,
@@ -49,7 +48,6 @@ export const Words = () => {
         setCollection(event.target.value)
     }
 
-    // Send server request
     const deleteHandler = (id: string) => {
         dispatch(deleteWordById(id));
         deleteModalHendler(id);
@@ -77,10 +75,9 @@ export const Words = () => {
     return (
         <>
             <CreateUserWord />
-            <ul className="flex flex-wrap justify-between m-5">
-
+            <ul className="m-5 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                 {data?.map(obj => (
-                    <li key={obj.Id} className="w-1/3 p-5 bg-gray-100 border border-gray-200 rounded-lg">
+                    <li key={obj.Id} className="p-5 bg-gray-100 border border-gray-200 rounded-lg">
                         <p>Words: {obj.Word}</p>
                         <p>Translate: {obj.Translate}</p>
                         <p>Status: {obj.Status}</p>
@@ -89,7 +86,7 @@ export const Words = () => {
                         {obj.Word !== "Hello" ? <div className="columns-3">
                             {/* EDIT WORD */}
                             <div>
-                                <button className="bg-green-100" onClick={() => editModalHendler(obj.Id)}>Edit</button>
+                                <button className="bg-green-100 hover:bg-green-200 p-1 rounded-lg" onClick={() => editModalHendler(obj.Id)}>Edit</button>
                                 {editModalMap[obj.Id] ?
                                     <>
                                         <div className="modal" id="modal">
@@ -112,7 +109,7 @@ export const Words = () => {
 
                                             <div className="actions">
                                                 <button
-                                                    className="toggle-button bg-green-100"
+                                                    className="toggle-button bg-green-100 hover:bg-green-200"
                                                     onClick={() => editModalHendler(obj.Id)}
                                                 >
                                                     Close
@@ -121,7 +118,7 @@ export const Words = () => {
 
                                             <div className="actions">
                                                 <button
-                                                    className="toggle-button bg-red-100"
+                                                    className="toggle-button bg-red-100 hover:bg-red-200"
                                                     onClick={() => updateHandler(obj.Id, newName, newTranslate)}
                                                 >
                                                     Change
@@ -134,7 +131,7 @@ export const Words = () => {
 
                             {/* ADD CATEGORY */}
                             <div>
-                                <button className="bg-yellow-100" onClick={() => catModalHandler(obj.Id)}>Add category</button>
+                                <button className="bg-yellow-100 hover:bg-yellow-200 p-1 rounded-lg" onClick={() => catModalHandler(obj.Id)}>Add category</button>
                                 {addCatModalMap[obj.Id] ?
                                     <>
                                         <div className="modal" id="modal">
@@ -147,7 +144,7 @@ export const Words = () => {
 
                                             <div className="actions">
                                                 <button
-                                                    className="toggle-button bg-green-100"
+                                                    className="toggle-button bg-green-100 hover:bg-green-200"
                                                     onClick={() => catModalHandler(obj.Id)}
                                                 >
                                                     Close
@@ -156,7 +153,7 @@ export const Words = () => {
 
                                             <div className="actions">
                                                 <button
-                                                    className="toggle-button bg-red-100"
+                                                    className="toggle-button bg-red-100 hover:bg-red-200"
                                                     onClick={() => addCatHandler(obj.Id, collection)}
                                                 >
                                                     Add category
@@ -169,7 +166,7 @@ export const Words = () => {
 
                             {/* DELETE WORD */}
                             <div>
-                                <button className="bg-red-100" onClick={() => deleteModalHendler(obj.Id)}>Delete</button>
+                                <button className="bg-red-100 hover:bg-red-200 p-1 rounded-lg" onClick={() => deleteModalHendler(obj.Id)}>Delete</button>
                                 {deleteModalMap[obj.Id] ?
                                     <>
                                         <div className="modal">
@@ -178,7 +175,7 @@ export const Words = () => {
 
                                             <div className="actions">
                                                 <button
-                                                    className="toggle-button bg-green-100"
+                                                    className="toggle-button bg-green-100 hover:bg-green-200"
                                                     onClick={() => deleteModalHendler(obj.Id)}
                                                 >
                                                     Close
@@ -187,7 +184,7 @@ export const Words = () => {
 
                                             <div className="actions">
                                                 <button
-                                                    className="toggle-button bg-red-100"
+                                                    className="toggle-button bg-red-100 hover:bg-red-200"
                                                     onClick={() => deleteHandler(obj.Id)}
                                                 >
                                                     Delete
@@ -197,7 +194,6 @@ export const Words = () => {
                                     </>
                                     : null}
                             </div>
-
                         </div>
                             : null}
                     </li>

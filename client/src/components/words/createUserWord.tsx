@@ -85,7 +85,7 @@ export const CreateUserWord = () => {
             </select>
 
             <button
-                className="bg-green-100 rounded w-12"
+                className="bg-green-100 rounded w-12 hover:bg-green-200"
                 onClick={() => onClickHandler(word, translate, collection)}
             >
                 Add
